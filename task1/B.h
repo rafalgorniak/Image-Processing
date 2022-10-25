@@ -7,7 +7,7 @@
 #include "CImg.h"
 using namespace cimg_library;
 
-void brightness(CImg<unsigned char> image,int scale=30) {
+void brightness(CImg<unsigned char> image,int scale) {
     for (int x = 0; x < image.width(); x++) {
         for (int y = 0; y < image.height() ; y++) {
             for(int i=0;i<3;i++)
@@ -24,7 +24,7 @@ void brightness(CImg<unsigned char> image,int scale=30) {
     image.save_bmp("..\\images\\out1.bmp");
 }
 
-void contrast(CImg<unsigned char> image,int scale=100) {
+void contrast(CImg<unsigned char> image,int scale) {
     float factor = ( 259 * ( scale + 255 ) ) / ( 255 * ( 259 - scale ) );
     for (int x = 0; x < image.width(); x++) {
         for (int y = 0; y < image.height() ; y++) {
