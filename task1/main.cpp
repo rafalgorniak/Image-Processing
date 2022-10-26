@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
     auto enlarge_ = op.add<Value<int>>("", "enlarge", "Image enlarging",2);
 
     //N.h
-    auto alpha_  = op.add<Switch>("", "alpha", "Denoising image with Alpha-trimmed mean filter");
+    auto alpha_  = op.add<Value<int>>("", "alpha", "Denoising image with Alpha-trimmed mean filter",0);
     auto gmean_  = op.add<Switch>("", "gmean", "Denoising image with Geometric mean filter");
 
     //E.h
@@ -75,7 +75,7 @@ int main(int argc, char *argv[]) {
 
         //N.h
         if (alpha_->is_set())
-            alpha_trimmed_mean_filter(origin);
+            alpha_trimmed_mean_filter(origin, alpha_->value());
         if (gmean_->is_set())
             geometric_mean_filter(origin);
 
@@ -110,9 +110,14 @@ int main(int argc, char *argv[]) {
             std::cout<<"Test image: "<<argv[2]<<std::endl;
             std::cout<<"Maximum difference: "<<maximum_difference(origin,test)<<std::endl;
         }
-    }catch(int e)
-    {
 
+    }catch(const CImgIOException& a)
+    {
+        //std::cout<<CImg exception<<std::endl;
+    }
+    catch ( ... )
+    {
+        //std::cout<<other exception<<std::endl;
     }
 
 

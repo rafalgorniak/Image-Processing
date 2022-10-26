@@ -7,7 +7,7 @@
 #include "CImg.h"
 using namespace cimg_library;
 
-void alpha_trimmed_mean_filter(CImg<unsigned char> image, int scale=0) {
+void alpha_trimmed_mean_filter(CImg<unsigned char> image, int scale) {
     if(scale>=0 and scale<9)
     {
         for (int x = 1; x < image.width()-1; x++) {
