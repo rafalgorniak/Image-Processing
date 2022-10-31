@@ -43,82 +43,85 @@ int main(int argc, char *argv[]) {
 
     op.parse(argc, argv);
 
-    try{
-        CImg<unsigned char> origin(argv[1]);
-        CImg<unsigned char> test;
-        if(mse_->is_set() || pmse_->is_set() || snr_->is_set() || psnr_->is_set() || md_->is_set())
-            test = CImg(argv[2]);
-
-        //help
-        if (help_option_->is_set())
-            cout << op << "\n";
-
-        //B.h
-        if (brightness_->is_set())
-            brightness(origin, brightness_->value());
-        if (contrast_->is_set())
-            brightness(origin, contrast_->value());
-        if (negative_->is_set())
-            negative(origin);
-
-        //G.h
-        if (hflip_->is_set())
-            horizontal_flip(origin);
-        if (vflip_->is_set())
-            vertical_flip(origin);
-        if (dflip_->is_set())
-            diagonal_flip(origin);
-        if (shrink_->is_set())
-            shrinking(origin, shrink_->value());
-        if (enlarge_->is_set())
-            enlargement(origin, enlarge_->value());
-
-        //N.h
-        if (alpha_->is_set())
-            alpha_trimmed_mean_filter(origin, alpha_->value());
-        if (gmean_->is_set())
-            geometric_mean_filter(origin);
-
-        //E.h
-        if (mse_->is_set())
-        {
-            std::cout<<"Original image: "<<argv[1]<<std::endl;
-            std::cout<<"Test image: "<<argv[2]<<std::endl;
-            std::cout<<"Mean square error: "<<mean_square_error(origin,test)<<std::endl;
-        }
-        if (pmse_->is_set())
-        {
-            std::cout<<"Original image: "<<argv[1]<<std::endl;
-            std::cout<<"Test image: "<<argv[2]<<std::endl;
-            std::cout<<"Peak mean error: "<<peak_mean_square_error(origin,test)<<std::endl;
-        }
-        if (snr_->is_set())
-        {
-            std::cout<<"Original image: "<<argv[1]<<std::endl;
-            std::cout<<"Test image: "<<argv[2]<<std::endl;
-            std::cout<<"Signal to noise radio: "<<signal_to_noise_radio(origin,test)<<std::endl;
-        }
-        if (psnr_->is_set())
-        {
-            std::cout<<"Original image: "<<argv[1]<<std::endl;
-            std::cout<<"Test image: "<<argv[2]<<std::endl;
-            std::cout<<"Peak signal to noise radio: "<<peak_signal_to_noise_radio(origin,test)<<std::endl;
-        }
-        if (md_->is_set())
-        {
-            std::cout<<"Original image: "<<argv[1]<<std::endl;
-            std::cout<<"Test image: "<<argv[2]<<std::endl;
-            std::cout<<"Maximum difference: "<<maximum_difference(origin,test)<<std::endl;
-        }
-
-    }catch(const CImgIOException& a)
+    //help
+    if (help_option_->is_set())
+        cout << op << "\n";
+    else
     {
-        //std::cout<<CImg exception<<std::endl;
+        try{
+            CImg<unsigned char> origin(argv[1]);
+            CImg<unsigned char> test;
+            if(mse_->is_set() || pmse_->is_set() || snr_->is_set() || psnr_->is_set() || md_->is_set())
+                test = CImg(argv[2]);
+
+            //B.h
+            if (brightness_->is_set())
+                brightness(origin, brightness_->value());
+            if (contrast_->is_set())
+                brightness(origin, contrast_->value());
+            if (negative_->is_set())
+                negative(origin);
+
+            //G.h
+            if (hflip_->is_set())
+                horizontal_flip(origin);
+            if (vflip_->is_set())
+                vertical_flip(origin);
+            if (dflip_->is_set())
+                diagonal_flip(origin);
+            if (shrink_->is_set())
+                shrinking(origin, shrink_->value());
+            if (enlarge_->is_set())
+                enlargement(origin, enlarge_->value());
+
+            //N.h
+            if (alpha_->is_set())
+                alpha_trimmed_mean_filter(origin, alpha_->value());
+            if (gmean_->is_set())
+                geometric_mean_filter(origin);
+
+            //E.h
+            if (mse_->is_set())
+            {
+                std::cout<<"Original image: "<<argv[1]<<std::endl;
+                std::cout<<"Test image: "<<argv[2]<<std::endl;
+                std::cout<<"Mean square error: "<<mean_square_error(origin,test)<<std::endl;
+            }
+            if (pmse_->is_set())
+            {
+                std::cout<<"Original image: "<<argv[1]<<std::endl;
+                std::cout<<"Test image: "<<argv[2]<<std::endl;
+                std::cout<<"Peak mean error: "<<peak_mean_square_error(origin,test)<<std::endl;
+            }
+            if (snr_->is_set())
+            {
+                std::cout<<"Original image: "<<argv[1]<<std::endl;
+                std::cout<<"Test image: "<<argv[2]<<std::endl;
+                std::cout<<"Signal to noise radio: "<<signal_to_noise_radio(origin,test)<<std::endl;
+            }
+            if (psnr_->is_set())
+            {
+                std::cout<<"Original image: "<<argv[1]<<std::endl;
+                std::cout<<"Test image: "<<argv[2]<<std::endl;
+                std::cout<<"Peak signal to noise radio: "<<peak_signal_to_noise_radio(origin,test)<<std::endl;
+            }
+            if (md_->is_set())
+            {
+                std::cout<<"Original image: "<<argv[1]<<std::endl;
+                std::cout<<"Test image: "<<argv[2]<<std::endl;
+                std::cout<<"Maximum difference: "<<maximum_difference(origin,test)<<std::endl;
+            }
+
+        }catch(const CImgIOException& a)
+        {
+            //std::cout<<CImg exception<<std::endl;
+        }
+        catch ( ... )
+        {
+            //std::cout<<other exception<<std::endl;
+        }
     }
-    catch ( ... )
-    {
-        //std::cout<<other exception<<std::endl;
-    }
+
 
 
     return 0;
