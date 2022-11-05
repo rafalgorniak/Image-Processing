@@ -11,33 +11,31 @@ using namespace std;
 
 int main(int argc, char *argv[]) {
 
-    //++ main.cpp -lgdi32 -o main.exe
-
     OptionParser op("Allowed options");
 
     //help
     auto help_option_   = op.add<Switch>("", "help", "produce help message");
 
     //B.h
-    auto brightness_ = op.add<Value<int>>("", "brightness", "Brigness modification",20);
-    auto contrast_ = op.add<Value<int>>("", "contrast", "Contrast modification",20);
+    auto brightness_ = op.add<Value<int>>("", "brightness", "Brigness modification");
+    auto contrast_ = op.add<Value<int>>("", "contrast", "Contrast modification");
     auto negative_  = op.add<Switch>("", "negative", "Turn image into negative");
 
     //G.h
     auto hflip_  = op.add<Switch>("", "hflip", "Horizontal Flip");
     auto vflip_  = op.add<Switch>("", "vflip", "Vertical Flip");
     auto dflip_  = op.add<Switch>("", "dflip", "Diagonal Flip");
-    auto shrink_ = op.add<Value<int>>("", "shrink", "Image Shrinking",2);
-    auto enlarge_ = op.add<Value<int>>("", "enlarge", "Image enlarging",2);
+    auto shrink_ = op.add<Value<int>>("", "shrink", "Image Shrinking");
+    auto enlarge_ = op.add<Value<int>>("", "enlarge", "Image enlarging");
 
     //N.h
-    auto alpha_  = op.add<Value<int>>("", "alpha", "Denoising image with Alpha-trimmed mean filter",0);
-    auto gmean_  = op.add<Switch>("", "gmean", "Denoising image with Geometric mean filter");
+    auto alpha_  = op.add<Value<int>>("", "alpha", "Denoising image with Alpha-trimmed mean filter");
+    auto gmean_  = op.add<Value<int>>("", "gmean", "Denoising image with Geometric mean filter");
 
     //E.h
     auto mse_  = op.add<Switch>("", "mse", "Mean square error");
     auto pmse_  = op.add<Switch>("", "pmse", "Peak mean square error");
-    auto snr_  = op.add<Switch>("", "snr", "Peak mean square error");
+    auto snr_  = op.add<Switch>("", "snr", "Signal to noise ratio");
     auto psnr_  = op.add<Switch>("", "psnr", "Peak signal to noise ratio");
     auto md_  = op.add<Switch>("", "md", "Maximum difference");
 
@@ -58,7 +56,7 @@ int main(int argc, char *argv[]) {
             if (brightness_->is_set())
                 brightness(origin, brightness_->value());
             if (contrast_->is_set())
-                brightness(origin, contrast_->value());
+                contrast(origin, contrast_->value());
             if (negative_->is_set())
                 negative(origin);
 
@@ -78,7 +76,7 @@ int main(int argc, char *argv[]) {
             if (alpha_->is_set())
                 alpha_trimmed_mean_filter(origin, alpha_->value());
             if (gmean_->is_set())
-                geometric_mean_filter(origin);
+                geometric_mean_filter(origin,gmean_->value());
 
             //E.h
             if (mse_->is_set())

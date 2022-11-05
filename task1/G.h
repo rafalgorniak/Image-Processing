@@ -72,5 +72,4 @@ void enlargement(CImg<unsigned char> image, int scale) {
     image2.save_bmp("..\\images\\out7.bmp");
 }
 
-
 #endif //C___G_H

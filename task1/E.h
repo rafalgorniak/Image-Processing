@@ -29,6 +29,7 @@ float peak_mean_square_error(CImg<unsigned char> image1, CImg<unsigned char> ima
     }
     return mean_square/(image1.width()*image1.height()*max);
 }
+
 float signal_to_noise_radio(CImg<unsigned char> image1, CImg<unsigned char> image2) {
     float mean_square1=0;
     float mean_square2=0;
@@ -40,6 +41,7 @@ float signal_to_noise_radio(CImg<unsigned char> image1, CImg<unsigned char> imag
     }
     return 10*log(mean_square1/mean_square2);
 }
+
 float peak_signal_to_noise_radio(CImg<unsigned char> image1, CImg<unsigned char> image2) {
     float mean_square1=0;
     int max=0;
@@ -52,6 +54,7 @@ float peak_signal_to_noise_radio(CImg<unsigned char> image1, CImg<unsigned char>
     }
     return 10*log(pow(max,2)/mean_square1);
 }
+
 int maximum_difference(CImg<unsigned char> image1, CImg<unsigned char> image2) {
     int max=0;
     for (int x = 0; x < image1.width(); x++) {

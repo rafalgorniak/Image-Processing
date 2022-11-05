@@ -24,13 +24,13 @@ void brightness(CImg<unsigned char> image,int scale) {
     image.save_bmp("..\\images\\out1.bmp");
 }
 
-void contrast(CImg<unsigned char> image,int scale) {
+void contrast(CImg<unsigned char> image,float scale) {
     float factor = ( 259 * ( scale + 255 ) ) / ( 255 * ( 259 - scale ) );
     for (int x = 0; x < image.width(); x++) {
         for (int y = 0; y < image.height() ; y++) {
             for(int i=0;i<3;i++)
             {
-                if( ( factor * ( image(x, y,i) - 128 ) + 128 ) >=0 and ( factor * ( image(x, y,i) - 128 ) + 128 ) <= 255 )
+                if( ( factor * (float)( image(x, y,i) - 128 ) + 128 ) >=0 and ( factor * ( image(x, y,i) - 128 ) + 128 ) <= 255 )
                     image(x, y,i) = factor * ( image(x, y,i) - 128 ) + 128;
                 else if( image(x, y,i) + scale > 255 )
                     image(x, y,i) = 255;

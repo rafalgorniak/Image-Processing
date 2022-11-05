@@ -52,18 +52,18 @@ void alpha_trimmed_mean_filter(CImg<unsigned char> image, int scale) {
     }
 }
 
-void geometric_mean_filter(CImg<unsigned char> image) {
-    for (int x = 1; x < image.width()-1; x++) {
-        for (int y = 1; y < image.height()-1; y++) {
+void geometric_mean_filter(CImg<unsigned char> image, int scale) {
+    for (int x = scale; x < image.width()-scale; x++) {
+        for (int y = scale; y < image.height()-scale; y++) {
             for(int o=0;o<=2;o++)
             {
                 double geom_sum=1;
-                for(int a = x-1;a<=x+1;a++)
+                for(int a = x-scale;a<=x+scale;a++)
                 {
-                    for(int b = y-1;b<=y+1;b++)
+                    for(int b = y-scale;b<=y+scale;b++)
                     {
                         if(image(a, b,o)!=0)
-                            geom_sum=geom_sum*pow(image(a, b,o),(float)1/9);
+                            geom_sum=geom_sum*pow(image(a, b,o),(float)(1/pow(2*scale+1,2)));
                     }
                 }
                 image(x, y,o)=int(geom_sum);
