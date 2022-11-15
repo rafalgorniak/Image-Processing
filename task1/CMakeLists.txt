@@ -3,6 +3,4 @@ project(C__)
 
 set(CMAKE_CXX_STANDARD 23)
 
-include_directories("C:\\Program Files\\boost\\boost_1_46_1")
-
-add_executable(C__ main.cpp CImg.h B.h G.h N.h E.h popl.hpp H.h C.h S.h O.h)
+add_executable(C__ main.cpp CImg.h task1/B.h task1/G.h task1/N.h task1/E.h popl.hpp task2/H.h task2/C.h task2/S.h task2/O.h)

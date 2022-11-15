@@ -4,7 +4,7 @@
 
 #ifndef C___G_H
 #define C___G_H
-#include "CImg.h"
+#include "../CImg.h"
 using namespace cimg_library;
 
 void horizontal_flip(CImg<unsigned char> image) {

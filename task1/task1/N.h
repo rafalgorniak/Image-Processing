@@ -4,7 +4,7 @@
 
 #ifndef C___N_H
 #define C___N_H
-#include "CImg.h"
+#include "../CImg.h"
 using namespace cimg_library;
 
 void alpha_trimmed_mean_filter(CImg<unsigned char> image, int scale) {

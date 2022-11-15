@@ -1,10 +1,14 @@
 #include <iostream>
 #include "CImg.h"
 #include "popl.hpp"
-#include "B.h"
-#include "N.h"
-#include "G.h"
-#include "E.h"
+#include "task1/B.h"
+#include "task1/N.h"
+#include "task1/G.h"
+#include "task1/E.h"
+#include "task2/H.h"
+#include "task2/C.h"
+#include "task2/O.h"
+#include "task2/S.h"
 using namespace cimg_library;
 using namespace popl;
 using namespace std;
@@ -16,6 +20,7 @@ int main(int argc, char *argv[]) {
     //help
     auto help_option_   = op.add<Switch>("", "help", "produce help message");
 
+    //Task1
     //B.h
     auto brightness_ = op.add<Value<int>>("", "brightness", "Brigness modification");
     auto contrast_ = op.add<Value<int>>("", "contrast", "Contrast modification");
@@ -38,6 +43,10 @@ int main(int argc, char *argv[]) {
     auto snr_  = op.add<Switch>("", "snr", "Signal to noise ratio");
     auto psnr_  = op.add<Switch>("", "psnr", "Peak signal to noise ratio");
     auto md_  = op.add<Switch>("", "md", "Maximum difference");
+
+    //Task2
+    //H.h
+    auto histogram_  = op.add<Value<int>>("", "histogram", "Creating histogram from image");
 
     op.parse(argc, argv);
 
@@ -110,6 +119,10 @@ int main(int argc, char *argv[]) {
                 std::cout<<"Maximum difference: "<<maximum_difference(origin,test)<<std::endl;
             }
 
+            //H.h
+            if(histogram_->is_set())
+                save_histogram(origin, histogram_->value());
+
         }catch(const CImgIOException& a)
         {
             //std::cout<<CImg exception<<std::endl;
@@ -119,8 +132,6 @@ int main(int argc, char *argv[]) {
             //std::cout<<other exception<<std::endl;
         }
     }
-
-
 
     return 0;
 }

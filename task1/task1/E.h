@@ -4,7 +4,7 @@
 
 #ifndef C___E_H
 #define C___E_H
-#include "CImg.h"
+#include "../CImg.h"
 using namespace cimg_library;
 
 float mean_square_error(CImg<unsigned char> image1, CImg<unsigned char> image2) {
@@ -27,7 +27,7 @@ float peak_mean_square_error(CImg<unsigned char> image1, CImg<unsigned char> ima
                 max=image1(x,y);
         }
     }
-    return mean_square/(image1.width()*image1.height()*max);
+    return mean_square/(image1.width()*image1.height()*pow(max,2));
 }
 
 float signal_to_noise_radio(CImg<unsigned char> image1, CImg<unsigned char> image2) {

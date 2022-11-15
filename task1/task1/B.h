@@ -4,7 +4,7 @@
 
 #ifndef C___B_H
 #define C___B_H
-#include "CImg.h"
+#include "../CImg.h"
 using namespace cimg_library;
 
 void brightness(CImg<unsigned char> image,int scale) {
