@@ -36,6 +36,7 @@ int main(int argc, char *argv[]) {
     //N.h
     auto alpha_  = op.add<Value<int>>("", "alpha", "Denoising image with Alpha-trimmed mean filter");
     auto gmean_  = op.add<Value<int>>("", "gmean", "Denoising image with Geometric mean filter");
+    auto max_  = op.add<Value<int>>("", "max", "Denoising image with Max filter");
 
     //E.h
     auto mse_  = op.add<Switch>("", "mse", "Mean square error");
@@ -47,6 +48,23 @@ int main(int argc, char *argv[]) {
     //Task2
     //H.h
     auto histogram_  = op.add<Value<int>>("", "histogram", "Creating histogram from image");
+    auto hexponent_  = op.add<Value<int>>("", "hexponent", "Draws an exponential final probability density function");
+
+    //C.h
+    auto mean_  = op.add<Value<int>>("", "cmean", "Calculate mean");
+    auto variance_  = op.add<Value<int>>("", "cvariance", "Calculate variance");
+    auto deviation_  = op.add<Value<int>>("", "cstdev", "Calculate deviation");
+    auto variationCoefficient_  = op.add<Value<int>>("", "cvarcoi", "Calculate variation coefficient !");
+    auto asymmetryCoefficient_  = op.add<Value<int>>("", "cflyco", "Calculate asymmetry coefficient");
+    auto flatteningCoefficient_  = op.add<Value<int>>("", "casyco", "Calculate flattening coefficient");
+    auto variationCoefficientII_  = op.add<Value<int>>("", "cvarcoii", "Calculate variation coefficient II");
+    auto entropy_  = op.add<Value<int>>("", "centropy", "Calculate entropy");
+
+    //S.h
+    auto extraction_of_deteials_  = op.add<Value<int>>("", "sexdetii", " Linear image filtration algorithm in spatial domain basing on convolution");
+
+    //O.h
+    auto uolis_operator_  = op.add<Value<int>>("", "ouolis", "Non-linear image filtration algorithm in spatial domain");
 
     op.parse(argc, argv);
 
@@ -86,6 +104,8 @@ int main(int argc, char *argv[]) {
                 alpha_trimmed_mean_filter(origin, alpha_->value());
             if (gmean_->is_set())
                 geometric_mean_filter(origin,gmean_->value());
+            if (max_->is_set())
+                maxFilter(origin,max_->value());
 
             //E.h
             if (mse_->is_set())
@@ -122,6 +142,35 @@ int main(int argc, char *argv[]) {
             //H.h
             if(histogram_->is_set())
                 save_histogram(origin, histogram_->value());
+            if(hexponent_->is_set())
+                exponential_final_probability_density(origin, 0,hexponent_->value(),0.05);
+
+            //C.h
+            if(mean_->is_set())
+                mean(origin, histogram_->value());
+            if(variance_->is_set())
+                variance(origin, histogram_->value());
+            if(deviation_->is_set())
+                deviation(origin, histogram_->value());
+            if(variationCoefficient_->is_set())
+                variationCoefficient(origin, histogram_->value());
+            if(asymmetryCoefficient_->is_set())
+                asymmetryCoefficient(origin, histogram_->value());
+            if(flatteningCoefficient_->is_set())
+                flatteningCoefficient(origin, histogram_->value());
+            if(variationCoefficientII_->is_set())
+                variationCoefficientII(origin, histogram_->value());
+            if(entropy_->is_set())
+                entropy(origin, histogram_->value());
+
+            //S.h
+            if(extraction_of_deteials_->is_set())
+                extraction_of_deteials(origin, extraction_of_deteials_->value());
+
+            //O.h
+            if(uolis_operator_->is_set())
+                uolis_operator(origin, uolis_operator_->value());
+
 
         }catch(const CImgIOException& a)
         {

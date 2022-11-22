@@ -17,7 +17,7 @@ void horizontal_flip(CImg<unsigned char> image) {
             }
         }
     }
-    image2.save_bmp("..\\images\\out4.bmp");
+    image2.save_bmp("..\\images\\HorizontalFlip.bmp");
 }
 
 void vertical_flip(CImg<unsigned char> image) {
@@ -30,7 +30,7 @@ void vertical_flip(CImg<unsigned char> image) {
             }
         }
     }
-    image2.save_bmp("..\\images\\out5.bmp");
+    image2.save_bmp("..\\images\\VerticalFlip.bmp");
 }
 
 void diagonal_flip(CImg<unsigned char> image) {
@@ -43,7 +43,7 @@ void diagonal_flip(CImg<unsigned char> image) {
             }
         }
     }
-    image2.save_bmp("..\\images\\out6.bmp");
+    image2.save_bmp("..\\images\\DiagonalFlip.bmp");
 }
 
 void shrinking(CImg<unsigned char> image, int scale) {
@@ -56,7 +56,7 @@ void shrinking(CImg<unsigned char> image, int scale) {
             }
         }
     }
-    image2.save_bmp("..\\images\\out7.bmp");
+    image2.save_bmp("..\\images\\Shrinking.bmp");
 }
 
 void enlargement(CImg<unsigned char> image, int scale) {
@@ -69,7 +69,7 @@ void enlargement(CImg<unsigned char> image, int scale) {
             }
         }
     }
-    image2.save_bmp("..\\images\\out7.bmp");
+    image2.save_bmp("..\\images\\Enlargement.bmp");
 }
 
 #endif //C___G_H

@@ -21,7 +21,7 @@ void brightness(CImg<unsigned char> image,int scale) {
             }
         }
     }
-    image.save_bmp("..\\images\\out1.bmp");
+    image.save_bmp("..\\images\\Brightness.bmp");
 }
 
 void contrast(CImg<unsigned char> image,float scale) {
@@ -39,7 +39,7 @@ void contrast(CImg<unsigned char> image,float scale) {
             }
         }
     }
-    image.save_bmp("..\\images\\out2.bmp");
+    image.save_bmp("..\\images\\Contrast.bmp");
 }
 
 void negative(CImg<unsigned char> image) {
@@ -51,7 +51,7 @@ void negative(CImg<unsigned char> image) {
             }
         }
     }
-    image.save_bmp("..\\images\\out3.bmp");
+    image.save_bmp("..\\images\\Negative.bmp");
 }
 
 #endif //C___B_H
