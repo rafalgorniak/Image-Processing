@@ -4,8 +4,10 @@
 
 #ifndef MAIN_CPP_O_H
 #define MAIN_CPP_O_H
+#include "../CImg.h"
+using namespace cimg_library;
 
-void uolis_operator() {
+void uolis_operator(CImg<unsigned char> image, int channel,int tab) {
 
 }
 

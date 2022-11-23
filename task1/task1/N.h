@@ -27,15 +27,7 @@ void alpha_trimmed_mean_filter(CImg<unsigned char> &image, int scale) {
                             n++;
                         }
                     }
-                    int j;
-                    for (int i = 0; i < elem_num - 1; i++)
-                        for (j = 0; j < elem_num - i - 1; j++)
-                            if (box[j] > box[j + 1])
-                            {
-                                int a=box[j];
-                                box[j]=box[j+1];
-                                box[j+1]=a;
-                            }
+                    std::sort(box,box+9);
                     if(scale%2==1)
                         start_elem=scale;
                     else
