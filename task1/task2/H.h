@@ -31,7 +31,6 @@ void save_histogram(CImg<unsigned char> image, int channel) {
     histogram.save_bmp("..\\images\\histogram.bmp");
 }
 
-
 void exponential_final_probability_density(CImg<unsigned char> image, int channel, int min, float alpha) {
     CImg<unsigned char> newImage = image;
     int PixelsNumber = image.width()*image.height();

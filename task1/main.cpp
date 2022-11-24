@@ -63,8 +63,9 @@ int main(int argc, char *argv[]) {
     //S.h
     auto extraction_of_deteials_ = op.add<Value<int>>("", "sexdetii", " Linear image filtration algorithm in spatial domain basing on convolution");
     auto optimized_extraction_of_deteials_ = op.add<Switch>("", "optsexdetii", "Linear image filtration algorithm in spatial domain basing on convolution, but optimized");
+
     //O.h
-    auto uolis_operator_ = op.add<Value<int>>("", "ouolis", "Non-linear image filtration algorithm in spatial domain");
+    auto uolis_operator_ = op.add<Switch>("", "ouolis", "Non-linear image filtration algorithm in spatial domain");
 
     op.parse(argc, argv);
 
@@ -175,7 +176,7 @@ int main(int argc, char *argv[]) {
 
             //O.h
             if(uolis_operator_->is_set())
-                uolis_operator(origin, uolis_operator_->value(),9);
+                uolis_operator(origin);
 
 
         }catch(const CImgIOException& a)

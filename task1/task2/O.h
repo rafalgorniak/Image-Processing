@@ -7,8 +7,17 @@
 #include "../CImg.h"
 using namespace cimg_library;
 
-void uolis_operator(CImg<unsigned char> image, int channel,int tab) {
-
+void uolis_operator(CImg<unsigned char> image) {
+    CImg<unsigned char> newImage = image;
+    for (int x = 1; x < image.width()-1; x++) {
+        for (int y = 1; y < image.height()-1; y++) {
+            for(int o=0;o<=2;o++)
+            {
+                newImage(x, y,o) = (unsigned char)log(pow(image(x, y,o),4)/(image(x-1, y,o)*image(x+1, y,o)*image(x, y-1,o)*image(x, y+1,o)))/4;
+            }
+        }
+    }
+    newImage.save_bmp("..\\images\\Uolis.bmp");
 }
 
 #endif //MAIN_CPP_O_H
