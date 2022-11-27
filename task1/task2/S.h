@@ -7,7 +7,7 @@
 #include "../CImg.h"
 using namespace cimg_library;
 
-void extraction_of_deteials(CImg<unsigned char> image, int size,int tab[][3]) {
+void extraction_of_deteials(CImg<unsigned char> image, int size,std::vector<int> vec) {
     CImg<unsigned char> newImage = image;
     for (int x = size; x < image.width()-size; x++) {
         for (int y = size; y < image.height()-size; y++) {
@@ -20,7 +20,7 @@ void extraction_of_deteials(CImg<unsigned char> image, int size,int tab[][3]) {
                     int w2=0;
                     for(int b = y-size;b<=y+size;b++)
                     {
-                        sum += tab[w1][w2]*image(a,b,o);
+                        sum += vec[w1*(2*size+1)+w2]*image(a,b,o);
                         w2++;
                     }
                     w1++;
@@ -29,7 +29,7 @@ void extraction_of_deteials(CImg<unsigned char> image, int size,int tab[][3]) {
             }
         }
     }
-    newImage.save_bmp("..\\images\\ExtractionOfDetails.bmp");
+    newImage.save_bmp("..\\images\\ExtractionOfDetails1.bmp");
 }
 
 void optimized_extraction_of_deteials(CImg<unsigned char> image) {
@@ -38,11 +38,9 @@ void optimized_extraction_of_deteials(CImg<unsigned char> image) {
         for (int y = 1; y < image.height()-1; y++) {
             for(int o=0;o<=2;o++)
             {
-                int sum = image(x-1, y-1,o)+image(x-1, y,o)+image(x-1, y+1,o)+
-                        image(x, y-1,o)-2*image(x, y,o)-image(x, y+1,o)+
-                        image(x-1, y-1,o)-image(x-1, y,o)-image(x+1, y+1,o);
-
-                newImage(x, y,o) = sum;
+                newImage(x, y,o) = image(x-1, y-1,o)+image(x-1, y,o)+image(x-1, y+1,o)+
+                                        image(x, y-1,o)-2*image(x, y,o)-image(x, y+1,o)+
+                                        image(x-1, y-1,o)-image(x-1, y,o)-image(x+1, y+1,o);;
             }
         }
     }

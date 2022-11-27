@@ -13,7 +13,7 @@ void uolis_operator(CImg<unsigned char> image) {
         for (int y = 1; y < image.height()-1; y++) {
             for(int o=0;o<=2;o++)
             {
-                newImage(x, y,o) = (unsigned char)log(pow(image(x, y,o),4)/(image(x-1, y,o)*image(x+1, y,o)*image(x, y-1,o)*image(x, y+1,o)))/4;
+                newImage(x, y,o) = (unsigned char)log2(0.8*pow(image(x, y,o),4)/(image(x-1, y,o)*image(x+1, y,o)*image(x, y-1,o)*image(x, y+1,o)));
             }
         }
     }

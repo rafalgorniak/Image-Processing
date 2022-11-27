@@ -21,33 +21,30 @@ void save_histogram(CImg<unsigned char> image, int channel) {
     }
     for(int i=0;i<300;i++) {
         for(int j=400;0<j;j--) {
-            if(PercentagePixelsTable[i]*10000>j)
+            if(PercentagePixelsTable[i]*20000>j)
             {
-                histogram(2*i, 400-j,channel) = 255;
-                histogram(2*i+1, 400-j,channel) = 255;
+                histogram(2*i, 400-j,0) = 100;
+                histogram(2*i+1, 400-j,0) = 100;
+                histogram(2*i, 400-j,1) = 100;
+                histogram(2*i+1, 400-j,1) = 100;
+                histogram(2*i, 400-j,2) = 100;
+                histogram(2*i+1, 400-j,2) = 100;
             }
         }
     }
     histogram.save_bmp("..\\images\\histogram.bmp");
 }
 
-void exponential_final_probability_density(CImg<unsigned char> image, int channel, int min, float alpha) {
+void exponential_final_probability_density(CImg<unsigned char> image, float min, float alpha) {
     CImg<unsigned char> newImage = image;
     int PixelsNumber = image.width()*image.height();
     int PercentagePixelsTable[256];
-    float NewValues[256];
-    float Min;
-    if (min == 0) {
-        Min = 0.001;
-    } else {
-        Min = (float)min;
-    }
     for(int & i : PercentagePixelsTable) {
         i=0;
     }
     for (int x = 0; x < image.width(); x++) {
         for (int y = 0; y < image.height() ; y++) {
-            PercentagePixelsTable[(int)image(x, y,channel)]++;
+            PercentagePixelsTable[(int)image(x, y,0)]++;
         }
     }
     for (int x = 0; x < newImage.width(); x++)
@@ -55,13 +52,13 @@ void exponential_final_probability_density(CImg<unsigned char> image, int channe
         for (int y = 0; y < newImage.height(); y++)
         {
             int sum=0;
-            for(int i=0;i<image(x, y, channel);i++)
+            for(int i=0;i<image(x, y, 0);i++)
             {
                 sum+=PercentagePixelsTable[i];
             }
-            newImage(x, y, 0) = Min -(1/(float)alpha)*log(1-((float) sum / (float) PixelsNumber));
-            newImage(x, y, 1) = Min -(1/(float)alpha)*log(1-((float) sum / (float) PixelsNumber));
-            newImage(x, y, 2) = Min -(1/(float)alpha)*log(1-((float) sum / (float) PixelsNumber));
+            newImage(x, y, 0) = min -(1/(float)alpha)*log(1-((float) sum / (float) PixelsNumber));
+            newImage(x, y, 1) = min -(1/(float)alpha)*log(1-((float) sum / (float) PixelsNumber));
+            newImage(x, y, 2) = min -(1/(float)alpha)*log(1-((float) sum / (float) PixelsNumber));
         }
     }
     newImage.save("..//images//exponential_function.bmp");

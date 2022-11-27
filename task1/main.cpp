@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
     //Task1
     //B.h
     auto brightness_ = op.add<Value<int>>("", "brightness", "Brigness modification");
-    auto contrast_ = op.add<Value<int>>("", "contrast", "Contrast modification");
+    auto contrast_ = op.add<Value<float>>("", "contrast", "Contrast modification");
     auto negative_ = op.add<Switch>("", "negative", "Turn image into negative");
 
     //G.h
@@ -48,9 +48,10 @@ int main(int argc, char *argv[]) {
     //Task2
     //H.h
     auto histogram_ = op.add<Value<int>>("", "histogram", "Creating histogram from image");
-    auto hexponent_ = op.add<Value<int>>("", "hexponent", "Draws an exponential final probability density function");
+    auto hexponent_ = op.add<Value<float>>("", "hexponent", "Draws an exponential final probability density function");
 
     //C.h
+    auto allC_ = op.add<Value<int>>("", "allC", "Calculate all characteristic for given image");
     auto mean_ = op.add<Value<int>>("", "cmean", "Calculate mean");
     auto variance_ = op.add<Value<int>>("", "cvariance", "Calculate variance");
     auto deviation_ = op.add<Value<int>>("", "cstdev", "Calculate deviation");
@@ -144,33 +145,45 @@ int main(int argc, char *argv[]) {
             if(histogram_->is_set())
                 save_histogram(origin, histogram_->value());
             if(hexponent_->is_set())
-                exponential_final_probability_density(origin, 0,hexponent_->value(),0.05);
+                exponential_final_probability_density(origin, hexponent_->value(),0.05);
 
             //C.h
+            if(allC_->is_set())
+            {
+                std::cout<<"Mean: "<<mean(origin, allC_->value())<<std::endl;
+                std::cout<<"Variance: "<<variance(origin, allC_->value())<<std::endl;
+                std::cout<<"Standard deviation: "<<deviation(origin, allC_->value())<<std::endl;
+                std::cout<<"Variation coefficient I: "<<variationCoefficient(origin, allC_->value())<<std::endl;
+                std::cout<<"Asymmetry coefficient: "<<asymmetryCoefficient(origin, allC_->value())<<std::endl;
+                std::cout<<"Flattening coefficient: "<<flatteningCoefficient(origin, allC_->value())<<std::endl;
+                std::cout<<"Variation coefficient II: "<<variationCoefficientII(origin, allC_->value())<<std::endl;
+                    std::cout<<"Information source entropy: "<<entropy(origin, allC_->value())<<std::endl;
+            }
             if(mean_->is_set())
-                mean(origin, histogram_->value());
+                mean(origin, mean_->value());
             if(variance_->is_set())
-                variance(origin, histogram_->value());
+                variance(origin, variance_->value());
             if(deviation_->is_set())
-                deviation(origin, histogram_->value());
+                deviation(origin, deviation_->value());
             if(variationCoefficient_->is_set())
-                variationCoefficient(origin, histogram_->value());
+                variationCoefficient(origin, variationCoefficient_->value());
             if(asymmetryCoefficient_->is_set())
-                asymmetryCoefficient(origin, histogram_->value());
+                asymmetryCoefficient(origin, asymmetryCoefficient_->value());
             if(flatteningCoefficient_->is_set())
-                flatteningCoefficient(origin, histogram_->value());
+                flatteningCoefficient(origin, flatteningCoefficient_->value());
             if(variationCoefficientII_->is_set())
-                variationCoefficientII(origin, histogram_->value());
+                variationCoefficientII(origin, variationCoefficientII_->value());
             if(entropy_->is_set())
-                entropy(origin, histogram_->value());
+                entropy(origin, entropy_->value());
 
             //S.h
             int tablica1[3][3]={{-1,-1,-1},{1,-2,1},{1,1,1}};
             int tablica2[3][3]={{1,-1,-1},{1,-2,-1},{1,1,1}};
             int tablica3[3][3]={{1,1,-1},{1,-2,-1},{1,1,-1}};
             int tablica4[3][3]={{1,1,1},{1,-2,-1},{1,-1,-1}};
+            vector<int> vec = {-1,-1,-1,1,-2,1,1,1,1};
             if(extraction_of_deteials_->is_set())
-                extraction_of_deteials(origin, extraction_of_deteials_->value(), tablica1);
+                extraction_of_deteials(origin, extraction_of_deteials_->value(), vec);
             if(optimized_extraction_of_deteials_->is_set())
                 optimized_extraction_of_deteials(origin);
 
