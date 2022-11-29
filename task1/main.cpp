@@ -9,6 +9,8 @@
 #include "task2/C.h"
 #include "task2/O.h"
 #include "task2/S.h"
+#include "task3/M.h"
+#include "task3/R.h"
 using namespace cimg_library;
 using namespace popl;
 using namespace std;
@@ -39,6 +41,7 @@ int main(int argc, char *argv[]) {
     auto max_ = op.add<Value<int>>("", "max", "Denoising image with Max filter");
 
     //E.h
+    auto allE_ = op.add<Switch>("", "allE", "All E similarities");
     auto mse_ = op.add<Switch>("", "mse", "Mean square error");
     auto pmse_ = op.add<Switch>("", "pmse", "Peak mean square error");
     auto snr_ = op.add<Switch>("", "snr", "Signal to noise ratio");
@@ -68,6 +71,9 @@ int main(int argc, char *argv[]) {
     //O.h
     auto uolis_operator_ = op.add<Switch>("", "ouolis", "Non-linear image filtration algorithm in spatial domain");
 
+    //Task3
+
+
     op.parse(argc, argv);
 
     //help
@@ -78,7 +84,7 @@ int main(int argc, char *argv[]) {
         try{
             CImg<unsigned char> origin(argv[1]);
             CImg<unsigned char> test;
-            if(mse_->is_set() || pmse_->is_set() || snr_->is_set() || psnr_->is_set() || md_->is_set())
+            if(mse_->is_set() || pmse_->is_set() || snr_->is_set() || psnr_->is_set() || md_->is_set() || allE_->is_set())
                 test = CImg(argv[2]);
 
             //B.h
@@ -110,6 +116,16 @@ int main(int argc, char *argv[]) {
                 maxFilter(origin,max_->value());
 
             //E.h
+            if(allE_->is_set())
+            {
+                std::cout<<"Original image: "<<argv[1]<<std::endl;
+                std::cout<<"Test image: "<<argv[2]<<std::endl;
+                std::cout<<"Mean square error: "<<mean_square_error(origin,test)<<std::endl;
+                std::cout<<"Peak mean error: "<<peak_mean_square_error(origin,test)<<std::endl;
+                std::cout<<"Signal to noise radio: "<<signal_to_noise_radio(origin,test)<<std::endl;
+                std::cout<<"Peak signal to noise radio: "<<peak_signal_to_noise_radio(origin,test)<<std::endl;
+                std::cout<<"Maximum difference: "<<maximum_difference(origin,test)<<std::endl;
+            }
             if (mse_->is_set())
             {
                 std::cout<<"Original image: "<<argv[1]<<std::endl;
@@ -157,7 +173,7 @@ int main(int argc, char *argv[]) {
                 std::cout<<"Asymmetry coefficient: "<<asymmetryCoefficient(origin, allC_->value())<<std::endl;
                 std::cout<<"Flattening coefficient: "<<flatteningCoefficient(origin, allC_->value())<<std::endl;
                 std::cout<<"Variation coefficient II: "<<variationCoefficientII(origin, allC_->value())<<std::endl;
-                    std::cout<<"Information source entropy: "<<entropy(origin, allC_->value())<<std::endl;
+                std::cout<<"Information source entropy: "<<entropy(origin, allC_->value())<<std::endl;
             }
             if(mean_->is_set())
                 mean(origin, mean_->value());
