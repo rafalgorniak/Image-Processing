@@ -7,7 +7,7 @@
 #include "../CImg.h"
 using namespace cimg_library;
 
-void extraction_of_deteials(CImg<unsigned char> image, int size,std::vector<int> vec) {
+void extraction_of_details(CImg<unsigned char> image, int size,std::vector<int> vec) {
     CImg<unsigned char> newImage = image;
     for (int x = size; x < image.width()-size; x++) {
         for (int y = size; y < image.height()-size; y++) {
@@ -32,7 +32,7 @@ void extraction_of_deteials(CImg<unsigned char> image, int size,std::vector<int>
     newImage.save_bmp("..\\images\\ExtractionOfDetails1.bmp");
 }
 
-void optimized_extraction_of_deteials(CImg<unsigned char> image) {
+void optimized_extraction_of_details(CImg<unsigned char> image) {
     CImg<unsigned char> newImage = image;
     for (int x = 1; x < image.width()-1; x++) {
         for (int y = 1; y < image.height()-1; y++) {
@@ -40,7 +40,7 @@ void optimized_extraction_of_deteials(CImg<unsigned char> image) {
             {
                 newImage(x, y,o) = image(x-1, y-1,o)+image(x-1, y,o)+image(x-1, y+1,o)+
                                         image(x, y-1,o)-2*image(x, y,o)-image(x, y+1,o)+
-                                        image(x-1, y-1,o)-image(x-1, y,o)-image(x+1, y+1,o);;
+                                        image(x-1, y-1,o)-image(x-1, y,o)-image(x+1, y+1,o);
             }
         }
     }

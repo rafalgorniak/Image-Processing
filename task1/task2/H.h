@@ -16,12 +16,12 @@ void save_histogram(CImg<unsigned char> image, int channel) {
     }
     for (int x = 0; x < image.width(); x++) {
         for (int y = 0; y < image.height() ; y++) {
-            PercentagePixelsTable[(int)image(x, y,channel)] +=(float)1/PixelsNumber;
+            PercentagePixelsTable[(int)image(x, y,channel)] +=(float)1/(float)PixelsNumber;
         }
     }
     for(int i=0;i<300;i++) {
         for(int j=400;0<j;j--) {
-            if(PercentagePixelsTable[i]*20000>j)
+            if(PercentagePixelsTable[i]*20000>(float)j)
             {
                 histogram(2*i, 400-j,0) = 100;
                 histogram(2*i+1, 400-j,0) = 100;
@@ -56,9 +56,9 @@ void exponential_final_probability_density(CImg<unsigned char> image, float min,
             {
                 sum+=PercentagePixelsTable[i];
             }
-            newImage(x, y, 0) = min -(1/(float)alpha)*log(1-((float) sum / (float) PixelsNumber));
-            newImage(x, y, 1) = min -(1/(float)alpha)*log(1-((float) sum / (float) PixelsNumber));
-            newImage(x, y, 2) = min -(1/(float)alpha)*log(1-((float) sum / (float) PixelsNumber));
+            newImage(x, y, 0) = (unsigned char)(min -(1/(float)alpha)*log(1-((float) sum / (double) PixelsNumber)));
+            newImage(x, y, 1) = (unsigned char)(min -(1/(float)alpha)*log(1-((float) sum / (double) PixelsNumber)));
+            newImage(x, y, 2) = (unsigned char)(min -(1/(float)alpha)*log(1-((float) sum / (double) PixelsNumber)));
         }
     }
     newImage.save("..//images//exponential_function.bmp");

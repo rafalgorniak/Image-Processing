@@ -161,7 +161,6 @@ void HMT(CImg<unsigned char> &image, std::vector<int> mask) {
                             !(mask[3*w+q] == 0 and image(x + q - 1, y + w - 1, 0) == 0) and mask[3*w+q] != 2)
                         flag = false;
                 }
-
             }
             if(flag) {
                 newImage(x, y, 0) = 0;
@@ -178,7 +177,9 @@ void HMT(CImg<unsigned char> &image, std::vector<int> mask) {
     newImage.save_bmp("..\\images\\HMT.bmp");
 }
 
-void m2() {
+void M2(CImg<unsigned char> &image, std::vector<int> mask) {
+    CImg<unsigned char> newImage = image;
+
 
 }
 

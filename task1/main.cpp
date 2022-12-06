@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
 
     //help
     auto help_option_ = op.add<Switch>("", "help", "produce help message");
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Task1
     //B.h
     auto brightness_ = op.add<Value<int>>("", "brightness", "Brigness modification");
@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
     auto snr_ = op.add<Switch>("", "snr", "Signal to noise ratio");
     auto psnr_ = op.add<Switch>("", "psnr", "Peak signal to noise ratio");
     auto md_ = op.add<Switch>("", "md", "Maximum difference");
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Task2
     //H.h
     auto histogram_ = op.add<Value<int>>("", "histogram", "Creating histogram from image");
@@ -70,7 +70,8 @@ int main(int argc, char *argv[]) {
 
     //O.h
     auto uolis_operator_ = op.add<Switch>("", "ouolis", "Non-linear image filtration algorithm in spatial domain");
-
+    auto sobel_operator_ = op.add<Switch>("", "sobel", "Non-linear image filtration algorithm in spatial domain");
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Task3
     auto dilation_ = op.add<Switch>("", "dilation", "Dilation");
     auto erosion_ = op.add<Switch>("", "erosion", "Erosion");
@@ -80,9 +81,7 @@ int main(int argc, char *argv[]) {
 
 
 
-
-
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     op.parse(argc, argv);
 
     //help
@@ -95,7 +94,7 @@ int main(int argc, char *argv[]) {
             CImg<unsigned char> test;
             if(mse_->is_set() || pmse_->is_set() || snr_->is_set() || psnr_->is_set() || md_->is_set() || allE_->is_set())
                 test = CImg(argv[2]);
-
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //B.h
             if (brightness_->is_set())
                 brightness(origin, brightness_->value());
@@ -165,7 +164,7 @@ int main(int argc, char *argv[]) {
                 std::cout<<"Test image: "<<argv[2]<<std::endl;
                 std::cout<<"Maximum difference: "<<maximum_difference(origin,test)<<std::endl;
             }
-
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //H.h
             if(histogram_->is_set())
                 save_histogram(origin, histogram_->value());
@@ -204,14 +203,16 @@ int main(int argc, char *argv[]) {
             //S.h
             vector<int> vec = {-1,-1,-1,1,-2,1,1,1,1};
             if(extraction_of_deteials_->is_set())
-                extraction_of_deteials(origin, extraction_of_deteials_->value(), vec);
+                extraction_of_details(origin, extraction_of_deteials_->value(), vec);
             if(optimized_extraction_of_deteials_->is_set())
-                optimized_extraction_of_deteials(origin);
+                optimized_extraction_of_details(origin);
 
             //O.h
             if(uolis_operator_->is_set())
                 uolis_operator(origin);
-
+            if(sobel_operator_->is_set())
+                sobel_operator(origin);
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //M.h
             vector<int> mask = {0,1,0,1,1,1,0,1,0};
             if(dilation_->is_set())

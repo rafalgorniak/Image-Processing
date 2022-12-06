@@ -64,20 +64,20 @@ double peak_signal_to_noise_radio(CImg<unsigned char> image1, CImg<unsigned char
 }
 
 int maximum_difference(CImg<unsigned char> image1, CImg<unsigned char> image2) {
-    int maxr=0;
-    int maxg=0;
-    int maxb=0;
+    int max_r=0;
+    int max_g=0;
+    int max_b=0;
     for (unsigned int x = 0; x < image1.width(); x++) {
         for (unsigned int y = 0; y < image1.height(); y++) {
-            if (std::abs(image1(x, y, 0) - image2(x, y, 0))>maxr)
-                maxr = (std::abs(image1(x, y, 0) - image2(x, y, 0)));
-            if (std::abs(image1(x, y, 0) - image2(x, y, 1))>maxg)
-                maxg = (std::abs(image1(x, y, 0) - image2(x, y, 1)));
-            if (std::abs(image1(x, y, 0) - image2(x, y, 2))>maxb)
-                maxb = (std::abs(image1(x, y, 0) - image2(x, y, 2)));
+            if (std::abs(image1(x, y, 0) - image2(x, y, 0))>max_r)
+                max_r = (std::abs(image1(x, y, 0) - image2(x, y, 0)));
+            if (std::abs(image1(x, y, 0) - image2(x, y, 1))>max_g)
+                max_g = (std::abs(image1(x, y, 0) - image2(x, y, 1)));
+            if (std::abs(image1(x, y, 0) - image2(x, y, 2))>max_b)
+                max_b = (std::abs(image1(x, y, 0) - image2(x, y, 2)));
             }
         }
-    return (maxr+maxg+maxb)/3;
+    return (max_r+max_g+max_b)/3;
 }
 
 #endif //C___E_H
