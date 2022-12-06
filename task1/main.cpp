@@ -72,6 +72,15 @@ int main(int argc, char *argv[]) {
     auto uolis_operator_ = op.add<Switch>("", "ouolis", "Non-linear image filtration algorithm in spatial domain");
 
     //Task3
+    auto dilation_ = op.add<Switch>("", "dilation", "Dilation");
+    auto erosion_ = op.add<Switch>("", "erosion", "Erosion");
+    auto opening_ = op.add<Switch>("", "opening", "Opening");
+    auto closing_ = op.add<Switch>("", "closing", "Closing");
+    auto HMT_ = op.add<Switch>("", "HMT", "Closing");
+
+
+
+
 
 
     op.parse(argc, argv);
@@ -193,10 +202,6 @@ int main(int argc, char *argv[]) {
                 entropy(origin, entropy_->value());
 
             //S.h
-            int tablica1[3][3]={{-1,-1,-1},{1,-2,1},{1,1,1}};
-            int tablica2[3][3]={{1,-1,-1},{1,-2,-1},{1,1,1}};
-            int tablica3[3][3]={{1,1,-1},{1,-2,-1},{1,1,-1}};
-            int tablica4[3][3]={{1,1,1},{1,-2,-1},{1,-1,-1}};
             vector<int> vec = {-1,-1,-1,1,-2,1,1,1,1};
             if(extraction_of_deteials_->is_set())
                 extraction_of_deteials(origin, extraction_of_deteials_->value(), vec);
@@ -206,6 +211,20 @@ int main(int argc, char *argv[]) {
             //O.h
             if(uolis_operator_->is_set())
                 uolis_operator(origin);
+
+            //M.h
+            vector<int> mask = {0,1,0,1,1,1,0,1,0};
+            if(dilation_->is_set())
+                dilation(origin,mask);
+            if(erosion_->is_set())
+                erosion(origin,mask);
+            if(opening_->is_set())
+                opening(origin,mask);
+            if(closing_->is_set())
+                closing(origin,mask);
+            vector<int> maskk = {1,1,1,2,0,2,2,2,2};
+            if(HMT_->is_set())
+                HMT(origin,maskk);
 
 
         }catch(const CImgIOException& a)
