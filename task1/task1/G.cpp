@@ -1,11 +1,4 @@
-//
-// Created by rafal on 13.10.2022.
-//
-
-#ifndef C___G_H
-#define C___G_H
-#include "../CImg.h"
-using namespace cimg_library;
+#include "G.h"
 
 void horizontal_flip(CImg<unsigned char> image) {
     CImg<unsigned char> image2 = image;
@@ -71,5 +64,3 @@ void enlargement(CImg<unsigned char> image, int scale) {
     }
     image2.save_bmp("..\\images\\Enlargement.bmp");
 }
-
-#endif //C___G_H

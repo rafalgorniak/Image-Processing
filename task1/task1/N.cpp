@@ -1,11 +1,4 @@
-//
-// Created by rafal on 13.10.2022.
-//
-
-#ifndef C___N_H
-#define C___N_H
-#include "../CImg.h"
-using namespace cimg_library;
+#include "N.h"
 
 void alpha_trimmed_mean_filter(CImg<unsigned char> &image, int scale) {
     if(scale>=0 and scale<9)
@@ -86,5 +79,3 @@ void maxFilter(CImg<unsigned char> image, int scale) {
     }
     newImage.save_bmp("..\\images\\MaxFilter.bmp");
 }
-
-#endif //C___N_H

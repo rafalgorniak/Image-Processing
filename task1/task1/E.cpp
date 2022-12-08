@@ -1,11 +1,4 @@
-//
-// Created by rafal on 16.10.2022.
-//
-
-#ifndef C___E_H
-#define C___E_H
-#include "../CImg.h"
-using namespace cimg_library;
+#include "E.h"
 
 double mean_square_error(CImg<unsigned char> image1, CImg<unsigned char> image2) {
     double mean_square=0;
@@ -79,5 +72,3 @@ int maximum_difference(CImg<unsigned char> image1, CImg<unsigned char> image2) {
         }
     return (max_r+max_g+max_b)/3;
 }
-
-#endif //C___E_H

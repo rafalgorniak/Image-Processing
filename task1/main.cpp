@@ -1,14 +1,17 @@
 #include <iostream>
 #include "CImg.h"
 #include "popl.hpp"
+
 #include "task1/B.h"
-#include "task1/N.h"
-#include "task1/G.h"
 #include "task1/E.h"
+#include "task1/G.h"
+#include "task1/N.h"
+
 #include "task2/H.h"
 #include "task2/C.h"
 #include "task2/O.h"
 #include "task2/S.h"
+
 #include "task3/M.h"
 #include "task3/R.h"
 using namespace cimg_library;
@@ -78,7 +81,7 @@ int main(int argc, char *argv[]) {
     auto opening_ = op.add<Switch>("", "opening", "Opening");
     auto closing_ = op.add<Switch>("", "closing", "Closing");
     auto HMT_ = op.add<Switch>("", "HMT", "Closing");
-
+    auto M2_ = op.add<Switch>("", "M2", "Closing");
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -226,6 +229,11 @@ int main(int argc, char *argv[]) {
             vector<int> maskk = {1,1,1,2,0,2,2,2,2};
             if(HMT_->is_set())
                 HMT(origin,maskk);
+            vector<int> maskkk = {1,1,1,1,1,1,1,1,1};
+            int x = 120;
+            int y = 450;
+            if(M2_->is_set())
+                M2(origin,maskk,x,y);
 
 
         }catch(const CImgIOException& a)
