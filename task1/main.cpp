@@ -229,11 +229,11 @@ int main(int argc, char *argv[]) {
             vector<int> maskk = {1,1,1,2,0,2,2,2,2};
             if(HMT_->is_set())
                 HMT(origin,maskk);
-            vector<int> maskkk = {1,1,1,1,1,1,1,1,1};
-            int x = 120;
-            int y = 450;
+            int x = 350;
+            int y = 350;
+            mask = {0,1,0,1,1,1,0,1,0};
             if(M2_->is_set())
-                M2(origin,maskk,x,y);
+                M2(origin,mask,x,y);
 
 
         }catch(const CImgIOException& a)
