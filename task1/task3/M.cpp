@@ -77,6 +77,7 @@ void opening(CImg<unsigned char> &image, std::vector<int> mask) {
             }
         }
     }
+
     CImg<unsigned char> newImage2 = newImage1;
     for (int x = 0; x < newImage1.width() ; x++) {
         for (int y = 0; y < newImage1.height()  ; y++) {
@@ -92,9 +93,9 @@ void opening(CImg<unsigned char> &image, std::vector<int> mask) {
                     for (int w = 0; w < 3; w++) {
                         if(mask[3*q+w]==1)
                         {
-                            newImage1(x + q - 1, y + w - 1, 0) = 255;
-                            newImage1(x + q - 1, y + w - 1, 1) = 255;
-                            newImage1(x + q - 1, y + w - 1, 2) = 255;
+                            newImage2(x + q - 1, y + w - 1, 0) = 255;
+                            newImage2(x + q - 1, y + w - 1, 1) = 255;
+                            newImage2(x + q - 1, y + w - 1, 2) = 255;
                         }
                     }
                 }
@@ -206,7 +207,6 @@ void M2(CImg<unsigned char> &image, std::vector<int> mask, int xx, int yy) {
         }
     }
     recur(image, newImage1, std::move(mask), xx, yy);
-
     for (int x = 0; x < image.width() ; x++) {
         for (int y = 0; y < image.height()  ; y++) {
             if(newImage1(x, y, 0)==255 or image(x, y, 0)==255) {
@@ -216,7 +216,6 @@ void M2(CImg<unsigned char> &image, std::vector<int> mask, int xx, int yy) {
             }
         }
     }
-
     newImage1.save_bmp("..\\images\\M2.bmp");
 }
 

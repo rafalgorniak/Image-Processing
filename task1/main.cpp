@@ -226,9 +226,12 @@ int main(int argc, char *argv[]) {
                 opening(origin,mask);
             if(closing_->is_set())
                 closing(origin,mask);
-            vector<int> maskk = {1,1,1,2,0,2,2,2,2};
+            vector<int> maskk1 = {1,2,2,1,0,2,1,2,2};
+            vector<int> maskk2 = {1,1,1,2,0,2,2,2,2};
+            vector<int> maskk3 = {2,2,1,2,0,1,2,2,1};
+            vector<int> maskk4 = {2,2,2,2,0,2,1,1,1};
             if(HMT_->is_set())
-                HMT(origin,maskk);
+                HMT(origin,maskk4);
             int x = 350;
             int y = 350;
             mask = {0,1,0,1,1,1,0,1,0};
