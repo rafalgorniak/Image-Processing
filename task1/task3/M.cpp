@@ -1,5 +1,7 @@
 #include "M.h"
 
+#include <utility>
+
 void erosion(CImg<unsigned char> &image, std::vector<int> mask) {
     CImg<unsigned char> newImage = image;
     for (int x = 1; x < image.width() - 1; x++) {
@@ -168,14 +170,14 @@ void HMT(CImg<unsigned char> &image, std::vector<int> mask) {
                 }
             }
             if(flag) {
+                newImage(x, y, 0) =255;
+                newImage(x, y, 1) = 255;
+                newImage(x, y, 2) = 255;
+            }
+            else {
                 newImage(x, y, 0) = 0;
                 newImage(x, y, 1) = 0;
                 newImage(x, y, 2) = 0;
-            }
-            else {
-                newImage(x, y, 0) = 255;
-                newImage(x, y, 1) = 255;
-                newImage(x, y, 2) = 255;
             }
         }
     }
@@ -189,7 +191,7 @@ void recur(CImg<unsigned char> &image,CImg<unsigned char> &newImage1, std::vecto
     for(int q = 0; q < 3; q++) {
         for (int w = 0; w < 3; w++) {
             if( image(x + q - 1 , y + w - 1 , 0) == 0 and mask[3*q+w]==1
-            and newImage1(x + q - 1 , y + w - 1 , 0) == 0)
+            and newImage1(x + q - 1 , y + w - 1 , 0) == 0 and x>1 and x<image.width() and y>1 and y<image.height())
             {
                 recur(image, newImage1, mask, x + q - 1, y + w - 1);
             }

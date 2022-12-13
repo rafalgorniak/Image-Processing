@@ -76,12 +76,15 @@ int main(int argc, char *argv[]) {
     auto sobel_operator_ = op.add<Switch>("", "sobel", "Non-linear image filtration algorithm in spatial domain");
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Task3
+    //M.h
     auto dilation_ = op.add<Switch>("", "dilation", "Dilation");
     auto erosion_ = op.add<Switch>("", "erosion", "Erosion");
     auto opening_ = op.add<Switch>("", "opening", "Opening");
     auto closing_ = op.add<Switch>("", "closing", "Closing");
     auto HMT_ = op.add<Switch>("", "HMT", "Closing");
     auto M2_ = op.add<Switch>("", "M2", "Closing");
+    //R.h
+    auto region_growing_merging_ = op.add<Switch>("", "RGM", "Closing");
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -231,13 +234,16 @@ int main(int argc, char *argv[]) {
             vector<int> maskk3 = {2,2,1,2,0,1,2,2,1};
             vector<int> maskk4 = {2,2,2,2,0,2,1,1,1};
             if(HMT_->is_set())
-                HMT(origin,maskk4);
-            int x = 350;
-            int y = 350;
-            mask = {0,1,0,1,1,1,0,1,0};
+                HMT(origin,maskk3);
+            int x = 250;
+            int y = 250;
+            mask = {1,1,1,1,1,1,1,1,1};
             if(M2_->is_set())
                 M2(origin,mask,x,y);
 
+            //R.h
+            if(region_growing_merging_->is_set())
+                region_growing_merging(origin,mask);
 
         }catch(const CImgIOException& a)
         {
