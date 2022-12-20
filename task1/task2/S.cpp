@@ -31,9 +31,11 @@ void optimized_extraction_of_details(CImg<unsigned char> image) {
         for (int y = 1; y < image.height()-1; y++) {
             for(int o=0;o<=2;o++)
             {
-                newImage(x, y,o) = image(x-1, y-1,o)+image(x-1, y,o)+image(x-1, y+1,o)+
-                                   image(x, y-1,o)-2*image(x, y,o)-image(x, y+1,o)+
-                                   image(x-1, y-1,o)-image(x-1, y,o)-image(x+1, y+1,o);
+                newImage(x, y,o) = abs(image(x-1, y-1,o)+image(x-1, y,o)+image(x-1, y+1,o)+
+                                       image(x, y-1,o)-2*image(x, y,o)-image(x, y+1,o)+
+                                       image(x-1, y-1,o)-image(x-1, y,o)-image(x+1, y+1,o));
+                if(newImage(x, y,o)>255)
+                    newImage(x, y,o)=255;
             }
         }
     }

@@ -31,7 +31,7 @@ bool signArea(CImg<unsigned char> Area, int x, int y)
     return false;
 }
 
-void region_growing_merging(CImg<unsigned char> &image, std::vector<int> mask) {
+void region_growing_merging(CImg<unsigned char> &image, const std::vector<int>& mask) {
     CImg<unsigned char> newImage1(image.width(), image.height(), 1, 3, 0);
     int X=100,Y=100;
     std::cout<<"X coordinate:"<<std::endl;
@@ -39,7 +39,6 @@ void region_growing_merging(CImg<unsigned char> &image, std::vector<int> mask) {
     std::cout<<"Y coordinate:"<<std::endl;
     std::cin>>Y;
     newImage1(X,Y,0)=255;
-
     for (int x = 1; x < image.width()-1; x++)
     {
         for (int y = 1; y < image.height()-1; y++)
@@ -48,7 +47,6 @@ void region_growing_merging(CImg<unsigned char> &image, std::vector<int> mask) {
             {
                 newImage1(x,y,0)=255;
             }
-
             if(newImage1(x,image.height()-1-y,0) == 0 && signArea(newImage1, x, image.height()-1-y)
             && signPixels(image, x, image.height()-1-y,mask))
             {
@@ -65,7 +63,6 @@ void region_growing_merging(CImg<unsigned char> &image, std::vector<int> mask) {
             {
                 newImage1(image.width()-1-x,image.height()-1-y,0) = 255;
             }
-
         }
     }
     newImage1.save_bmp("..\\images\\RGM.bmp");

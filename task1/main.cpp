@@ -175,7 +175,7 @@ int main(int argc, char *argv[]) {
             if(histogram_->is_set())
                 save_histogram(origin, histogram_->value());
             if(hexponent_->is_set())
-                exponential_final_probability_density(origin, hexponent_->value(),0.05);
+                exponential_final_probability_density(origin, hexponent_->value(),0.15);
 
             //C.h
             if(allC_->is_set())

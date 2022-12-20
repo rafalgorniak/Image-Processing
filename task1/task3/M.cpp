@@ -1,7 +1,5 @@
 #include "M.h"
 
-#include <utility>
-
 void erosion(CImg<unsigned char> &image, std::vector<int> mask) {
     CImg<unsigned char> newImage = image;
     for (int x = 1; x < image.width() - 1; x++) {
