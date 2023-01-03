@@ -42,6 +42,13 @@ void exponential_final_probability_density(CImg<unsigned char> image, float min,
     }
     for (int x = 0; x < newImage.width(); x++)
     {
+        for (int y = 0; y < newImage.height(); y++) {
+
+        }
+    }
+
+    for (int x = 0; x < newImage.width(); x++)
+    {
         for (int y = 0; y < newImage.height(); y++)
         {
             int sum=0;

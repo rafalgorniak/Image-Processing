@@ -1,6 +1,8 @@
 #include "M.h"
 
-void erosion(CImg<unsigned char> &image, std::vector<int> mask) {
+#include <utility>
+
+CImg<unsigned char> erosion(CImg<unsigned char> &image, std::vector<int> mask) {
     CImg<unsigned char> newImage = image;
     for (int x = 1; x < image.width() - 1; x++) {
         for (int y = 1; y < image.height() - 1 ; y++) {
@@ -23,10 +25,10 @@ void erosion(CImg<unsigned char> &image, std::vector<int> mask) {
             }
         }
     }
-    newImage.save_bmp("..\\images\\Erosion.bmp");
+    return newImage;
 }
 
-void dilation(CImg<unsigned char> &image, std::vector<int> mask) {
+CImg<unsigned char> dilation(CImg<unsigned char> &image, std::vector<int> mask) {
     CImg<unsigned char> newImage = image;
     for (int x = 0; x < image.width() ; x++) {
         for (int y = 0; y < image.height()  ; y++) {
@@ -51,7 +53,7 @@ void dilation(CImg<unsigned char> &image, std::vector<int> mask) {
             }
         }
     }
-    newImage.save_bmp("..\\images\\Dilation.bmp");
+    return newImage;
 }
 
 void opening(CImg<unsigned char> &image, std::vector<int> mask) {
@@ -219,3 +221,54 @@ void M2(CImg<unsigned char> &image, std::vector<int> mask, int xx, int yy) {
     newImage1.save_bmp("..\\images\\M2.bmp");
 }
 
+void M1_1(CImg<unsigned char> &image, std::vector<int> mask) {
+    CImg<unsigned char> newImage1 = dilation(image, std::move(mask));
+    for (int x = 0; x < image.width(); x++) {
+        for (int y = 0; y < image.height() ; y++) {
+
+            if(image(x,y,0) == 255)
+            {
+                newImage1(x,y,0) = 0;
+                newImage1(x,y,1) = 0;
+                newImage1(x,y,2) = 0;
+            }
+        }
+    }
+    newImage1.save_bmp("..\\images\\M1_1.bmp");
+}
+
+void M1_2(CImg<unsigned char> &image, std::vector<int> mask) {
+    CImg<unsigned char> newImage1 = erosion(image, std::move(mask));
+    for (int x = 0; x < image.width(); x++) {
+        for (int y = 0; y < image.height() ; y++) {
+
+            if(newImage1(x,y,0) == 255)
+            {
+                image(x,y,0) = 0;
+                image(x,y,1) = 0;
+                image(x,y,2) = 0;
+            }
+        }
+    }
+    image.save_bmp("..\\images\\M1_2.bmp");
+}
+
+void M1_3(CImg<unsigned char> &image, std::vector<int> mask) {
+    CImg<unsigned char> newImage1 = erosion(image, mask);
+    newImage1.save_bmp("..\\images\\M1_3_.bmp");
+    CImg<unsigned char> newImage2 = dilation(image, mask);
+    newImage2.save_bmp("..\\images\\M1_3__.bmp");
+    for (int x = 0; x < image.width(); x++) {
+        for (int y = 0; y < image.height() ; y++) {
+
+            if(newImage1(x,y,0) == 255)
+            {
+                newImage2(x,y,0) = 0;
+                newImage2(x,y,1) = 0;
+                newImage2(x,y,2) = 0;
+            }
+        }
+    }
+
+    newImage2.save_bmp("..\\images\\M1_3.bmp");
+}

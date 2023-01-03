@@ -81,12 +81,14 @@ int main(int argc, char *argv[]) {
     auto erosion_ = op.add<Switch>("", "erosion", "Erosion");
     auto opening_ = op.add<Switch>("", "opening", "Opening");
     auto closing_ = op.add<Switch>("", "closing", "Closing");
-    auto HMT_ = op.add<Switch>("", "HMT", "Closing");
-    auto M2_ = op.add<Switch>("", "M2", "Closing");
+    auto HMT_ = op.add<Switch>("", "HMT", "HMT");
+    auto M2_ = op.add<Switch>("", "M2", "M2");
+    auto M1_1_ = op.add<Switch>("", "M1_1", "Closing");
+    auto M1_2_ = op.add<Switch>("", "M1_2", "Closing");
+    auto M1_3_ = op.add<Switch>("", "M1_3", "Closing");
+
     //R.h
     auto region_growing_merging_ = op.add<Switch>("", "RGM", "Closing");
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     op.parse(argc, argv);
 
@@ -175,7 +177,7 @@ int main(int argc, char *argv[]) {
             if(histogram_->is_set())
                 save_histogram(origin, histogram_->value());
             if(hexponent_->is_set())
-                exponential_final_probability_density(origin, hexponent_->value(),0.15);
+                exponential_final_probability_density(origin, hexponent_->value(), 0.15);
 
             //C.h
             if(allC_->is_set())
@@ -234,16 +236,25 @@ int main(int argc, char *argv[]) {
             vector<int> maskk3 = {2,2,1,2,0,1,2,2,1};
             vector<int> maskk4 = {2,2,2,2,0,2,1,1,1};
             if(HMT_->is_set())
-                HMT(origin,maskk3);
+                HMT(origin,maskk1);
             int x = 250;
             int y = 250;
+
             mask = {1,1,1,1,1,1,1,1,1};
             if(M2_->is_set())
                 M2(origin,mask,x,y);
+            if(M1_1_->is_set())
+                M1_1(origin,mask);
+            if(M1_2_->is_set())
+                M1_2(origin,mask);
+            if(M1_3_->is_set())
+                M1_3(origin,mask);
 
             //R.h
             if(region_growing_merging_->is_set())
                 region_growing_merging(origin,mask);
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
         }catch(const CImgIOException& a)
         {
