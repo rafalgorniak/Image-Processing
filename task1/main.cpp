@@ -14,6 +14,8 @@
 
 #include "task3/M.h"
 #include "task3/R.h"
+
+#include "task4/T.h"
 using namespace cimg_library;
 using namespace popl;
 using namespace std;
@@ -90,6 +92,13 @@ int main(int argc, char *argv[]) {
     //R.h
     auto region_growing_merging_ = op.add<Switch>("", "RGM", "Closing");
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Task4
+    //T.h
+    auto DFT_ = op.add<Switch>("", "DFT", "Discrete Furier Transform");
+    auto FFT_ = op.add<Switch>("", "FFT", "Fast Furier Transform");
+    auto IDFT_ = op.add<Switch>("", "IDFT", "Inverse Discrete Furier Transform");
+    auto IFFT_ = op.add<Switch>("", "IFFT", "Inverse Fast Furier Transform");
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     op.parse(argc, argv);
 
     //help
@@ -103,6 +112,7 @@ int main(int argc, char *argv[]) {
             if(mse_->is_set() || pmse_->is_set() || snr_->is_set() || psnr_->is_set() || md_->is_set() || allE_->is_set())
                 test = CImg(argv[2]);
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //Task1
             //B.h
             if (brightness_->is_set())
                 brightness(origin, brightness_->value());
@@ -173,6 +183,7 @@ int main(int argc, char *argv[]) {
                 std::cout<<"Maximum difference: "<<maximum_difference(origin,test)<<std::endl;
             }
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //Task2
             //H.h
             if(histogram_->is_set())
                 save_histogram(origin, histogram_->value());
@@ -221,8 +232,13 @@ int main(int argc, char *argv[]) {
             if(sobel_operator_->is_set())
                 sobel_operator(origin);
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //Task3
             //M.h
             vector<int> mask = {0,1,0,1,1,1,0,1,0};
+            vector<int> maskk1 = {1,2,2,1,0,2,1,2,2};
+            vector<int> maskk2 = {1,1,1,2,0,2,2,2,2};
+            vector<int> maskk3 = {2,2,1,2,0,1,2,2,1};
+            vector<int> maskk4 = {2,2,2,2,0,2,1,1,1};
             if(dilation_->is_set())
                 dilation(origin,mask);
             if(erosion_->is_set())
@@ -231,15 +247,11 @@ int main(int argc, char *argv[]) {
                 opening(origin,mask);
             if(closing_->is_set())
                 closing(origin,mask);
-            vector<int> maskk1 = {1,2,2,1,0,2,1,2,2};
-            vector<int> maskk2 = {1,1,1,2,0,2,2,2,2};
-            vector<int> maskk3 = {2,2,1,2,0,1,2,2,1};
-            vector<int> maskk4 = {2,2,2,2,0,2,1,1,1};
             if(HMT_->is_set())
                 HMT(origin,maskk1);
+
             int x = 250;
             int y = 250;
-
             mask = {1,1,1,1,1,1,1,1,1};
             if(M2_->is_set())
                 M2(origin,mask,x,y);
@@ -254,7 +266,17 @@ int main(int argc, char *argv[]) {
             if(region_growing_merging_->is_set())
                 region_growing_merging(origin,mask);
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+            //Task4
+            //T.h
+            if(DFT_->is_set())
+                DFT(origin);
+            if(IDFT_->is_set())
+                IDFT(DFT(origin));
+            if(FFT_->is_set())
+                FFT(origin);
+            if(IFFT_->is_set())
+                IFFT(origin);
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         }catch(const CImgIOException& a)
         {
