@@ -16,6 +16,8 @@
 #include "task3/R.h"
 
 #include "task4/T.h"
+#include "task4/F.h"
+
 using namespace cimg_library;
 using namespace popl;
 using namespace std;
@@ -98,6 +100,14 @@ int main(int argc, char *argv[]) {
     auto FFT_ = op.add<Switch>("", "FFT", "Fast Furier Transform");
     auto IDFT_ = op.add<Switch>("", "IDFT", "Inverse Discrete Furier Transform");
     auto IFFT_ = op.add<Switch>("", "IFFT", "Inverse Fast Furier Transform");
+
+    //F.h
+    auto LPF_ = op.add<Switch>("", "LPF", "Low-Pass FIlter");
+    auto HPF_ = op.add<Switch>("", "HPF", "High-Pass FIlter");
+    auto BPF_ = op.add<Switch>("", "BPF", "Band-Pass FIlter");
+    auto BCF_ = op.add<Switch>("", "BCF", "Band-cut FIlter");
+    auto HPDED_ = op.add<Switch>("", "HPDED", "High-pass filter with detection of edge direction");
+    auto PMF_ = op.add<Switch>("", "PMF", "Phase modifying filter");
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     op.parse(argc, argv);
 
@@ -113,169 +123,197 @@ int main(int argc, char *argv[]) {
                 test = CImg(argv[2]);
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //Task1
-            //B.h
-            if (brightness_->is_set())
-                brightness(origin, brightness_->value());
-            if (contrast_->is_set())
-                contrast(origin, contrast_->value());
-            if (negative_->is_set())
-                negative(origin);
+            {
+                //B.h
+                if (brightness_->is_set())
+                    brightness(origin, brightness_->value());
+                if (contrast_->is_set())
+                    contrast(origin, contrast_->value());
+                if (negative_->is_set())
+                    negative(origin);
 
-            //G.h
-            if (hflip_->is_set())
-                horizontal_flip(origin);
-            if (vflip_->is_set())
-                vertical_flip(origin);
-            if (dflip_->is_set())
-                diagonal_flip(origin);
-            if (shrink_->is_set())
-                shrinking(origin, shrink_->value());
-            if (enlarge_->is_set())
-                enlargement(origin, enlarge_->value());
+                //G.h
+                if (hflip_->is_set())
+                    horizontal_flip(origin);
+                if (vflip_->is_set())
+                    vertical_flip(origin);
+                if (dflip_->is_set())
+                    diagonal_flip(origin);
+                if (shrink_->is_set())
+                    shrinking(origin, shrink_->value());
+                if (enlarge_->is_set())
+                    enlargement(origin, enlarge_->value());
 
-            //N.h
-            if (alpha_->is_set())
-                alpha_trimmed_mean_filter(origin, alpha_->value());
-            if (gmean_->is_set())
-                geometric_mean_filter(origin,gmean_->value());
-            if (max_->is_set())
-                maxFilter(origin,max_->value());
+                //N.h
+                if (alpha_->is_set())
+                    alpha_trimmed_mean_filter(origin, alpha_->value());
+                if (gmean_->is_set())
+                    geometric_mean_filter(origin,gmean_->value());
+                if (max_->is_set())
+                    maxFilter(origin,max_->value());
 
-            //E.h
-            if(allE_->is_set())
-            {
-                std::cout<<"Original image: "<<argv[1]<<std::endl;
-                std::cout<<"Test image: "<<argv[2]<<std::endl;
-                std::cout<<"Mean square error: "<<mean_square_error(origin,test)<<std::endl;
-                std::cout<<"Peak mean error: "<<peak_mean_square_error(origin,test)<<std::endl;
-                std::cout<<"Signal to noise radio: "<<signal_to_noise_radio(origin,test)<<std::endl;
-                std::cout<<"Peak signal to noise radio: "<<peak_signal_to_noise_radio(origin,test)<<std::endl;
-                std::cout<<"Maximum difference: "<<maximum_difference(origin,test)<<std::endl;
-            }
-            if (mse_->is_set())
-            {
-                std::cout<<"Original image: "<<argv[1]<<std::endl;
-                std::cout<<"Test image: "<<argv[2]<<std::endl;
-                std::cout<<"Mean square error: "<<mean_square_error(origin,test)<<std::endl;
-            }
-            if (pmse_->is_set())
-            {
-                std::cout<<"Original image: "<<argv[1]<<std::endl;
-                std::cout<<"Test image: "<<argv[2]<<std::endl;
-                std::cout<<"Peak mean error: "<<peak_mean_square_error(origin,test)<<std::endl;
-            }
-            if (snr_->is_set())
-            {
-                std::cout<<"Original image: "<<argv[1]<<std::endl;
-                std::cout<<"Test image: "<<argv[2]<<std::endl;
-                std::cout<<"Signal to noise radio: "<<signal_to_noise_radio(origin,test)<<std::endl;
-            }
-            if (psnr_->is_set())
-            {
-                std::cout<<"Original image: "<<argv[1]<<std::endl;
-                std::cout<<"Test image: "<<argv[2]<<std::endl;
-                std::cout<<"Peak signal to noise radio: "<<peak_signal_to_noise_radio(origin,test)<<std::endl;
-            }
-            if (md_->is_set())
-            {
-                std::cout<<"Original image: "<<argv[1]<<std::endl;
-                std::cout<<"Test image: "<<argv[2]<<std::endl;
-                std::cout<<"Maximum difference: "<<maximum_difference(origin,test)<<std::endl;
+                //E.h
+                if(allE_->is_set())
+                {
+                    std::cout<<"Original image: "<<argv[1]<<std::endl;
+                    std::cout<<"Test image: "<<argv[2]<<std::endl;
+                    std::cout<<"Mean square error: "<<mean_square_error(origin,test)<<std::endl;
+                    std::cout<<"Peak mean error: "<<peak_mean_square_error(origin,test)<<std::endl;
+                    std::cout<<"Signal to noise radio: "<<signal_to_noise_radio(origin,test)<<std::endl;
+                    std::cout<<"Peak signal to noise radio: "<<peak_signal_to_noise_radio(origin,test)<<std::endl;
+                    std::cout<<"Maximum difference: "<<maximum_difference(origin,test)<<std::endl;
+                }
+                if (mse_->is_set())
+                {
+                    std::cout<<"Original image: "<<argv[1]<<std::endl;
+                    std::cout<<"Test image: "<<argv[2]<<std::endl;
+                    std::cout<<"Mean square error: "<<mean_square_error(origin,test)<<std::endl;
+                }
+                if (pmse_->is_set())
+                {
+                    std::cout<<"Original image: "<<argv[1]<<std::endl;
+                    std::cout<<"Test image: "<<argv[2]<<std::endl;
+                    std::cout<<"Peak mean error: "<<peak_mean_square_error(origin,test)<<std::endl;
+                }
+                if (snr_->is_set())
+                {
+                    std::cout<<"Original image: "<<argv[1]<<std::endl;
+                    std::cout<<"Test image: "<<argv[2]<<std::endl;
+                    std::cout<<"Signal to noise radio: "<<signal_to_noise_radio(origin,test)<<std::endl;
+                }
+                if (psnr_->is_set())
+                {
+                    std::cout<<"Original image: "<<argv[1]<<std::endl;
+                    std::cout<<"Test image: "<<argv[2]<<std::endl;
+                    std::cout<<"Peak signal to noise radio: "<<peak_signal_to_noise_radio(origin,test)<<std::endl;
+                }
+                if (md_->is_set())
+                {
+                    std::cout<<"Original image: "<<argv[1]<<std::endl;
+                    std::cout<<"Test image: "<<argv[2]<<std::endl;
+                    std::cout<<"Maximum difference: "<<maximum_difference(origin,test)<<std::endl;
+                }
             }
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //Task2
-            //H.h
-            if(histogram_->is_set())
-                save_histogram(origin, histogram_->value());
-            if(hexponent_->is_set())
-                exponential_final_probability_density(origin, hexponent_->value(), 0.15);
-
-            //C.h
-            if(allC_->is_set())
             {
-                std::cout<<"Mean: "<<mean(origin, allC_->value())<<std::endl;
-                std::cout<<"Variance: "<<variance(origin, allC_->value())<<std::endl;
-                std::cout<<"Standard deviation: "<<deviation(origin, allC_->value())<<std::endl;
-                std::cout<<"Variation coefficient I: "<<variationCoefficient(origin, allC_->value())<<std::endl;
-                std::cout<<"Asymmetry coefficient: "<<asymmetryCoefficient(origin, allC_->value())<<std::endl;
-                std::cout<<"Flattening coefficient: "<<flatteningCoefficient(origin, allC_->value())<<std::endl;
-                std::cout<<"Variation coefficient II: "<<variationCoefficientII(origin, allC_->value())<<std::endl;
-                std::cout<<"Information source entropy: "<<entropy(origin, allC_->value())<<std::endl;
+                //H.h
+                if(histogram_->is_set())
+                    save_histogram(origin, histogram_->value());
+                if(hexponent_->is_set())
+                    exponential_final_probability_density(origin, hexponent_->value(), 0.15);
+
+                //C.h
+                if(allC_->is_set())
+                {
+                    std::cout<<"Mean: "<<mean(origin, allC_->value())<<std::endl;
+                    std::cout<<"Variance: "<<variance(origin, allC_->value())<<std::endl;
+                    std::cout<<"Standard deviation: "<<deviation(origin, allC_->value())<<std::endl;
+                    std::cout<<"Variation coefficient I: "<<variationCoefficient(origin, allC_->value())<<std::endl;
+                    std::cout<<"Asymmetry coefficient: "<<asymmetryCoefficient(origin, allC_->value())<<std::endl;
+                    std::cout<<"Flattening coefficient: "<<flatteningCoefficient(origin, allC_->value())<<std::endl;
+                    std::cout<<"Variation coefficient II: "<<variationCoefficientII(origin, allC_->value())<<std::endl;
+                    std::cout<<"Information source entropy: "<<entropy(origin, allC_->value())<<std::endl;
+                }
+                if(mean_->is_set())
+                    mean(origin, mean_->value());
+                if(variance_->is_set())
+                    variance(origin, variance_->value());
+                if(deviation_->is_set())
+                    deviation(origin, deviation_->value());
+                if(variationCoefficient_->is_set())
+                    variationCoefficient(origin, variationCoefficient_->value());
+                if(asymmetryCoefficient_->is_set())
+                    asymmetryCoefficient(origin, asymmetryCoefficient_->value());
+                if(flatteningCoefficient_->is_set())
+                    flatteningCoefficient(origin, flatteningCoefficient_->value());
+                if(variationCoefficientII_->is_set())
+                    variationCoefficientII(origin, variationCoefficientII_->value());
+                if(entropy_->is_set())
+                    entropy(origin, entropy_->value());
+
+                //S.h
+                vector<int> vec = {-1,-1,-1,1,-2,1,1,1,1};
+                if(extraction_of_deteials_->is_set())
+                    extraction_of_details(origin, extraction_of_deteials_->value(), vec);
+                if(optimized_extraction_of_deteials_->is_set())
+                    optimized_extraction_of_details(origin);
+
+                //O.h
+                if(uolis_operator_->is_set())
+                    uolis_operator(origin);
+                if(sobel_operator_->is_set())
+                    sobel_operator(origin);
             }
-            if(mean_->is_set())
-                mean(origin, mean_->value());
-            if(variance_->is_set())
-                variance(origin, variance_->value());
-            if(deviation_->is_set())
-                deviation(origin, deviation_->value());
-            if(variationCoefficient_->is_set())
-                variationCoefficient(origin, variationCoefficient_->value());
-            if(asymmetryCoefficient_->is_set())
-                asymmetryCoefficient(origin, asymmetryCoefficient_->value());
-            if(flatteningCoefficient_->is_set())
-                flatteningCoefficient(origin, flatteningCoefficient_->value());
-            if(variationCoefficientII_->is_set())
-                variationCoefficientII(origin, variationCoefficientII_->value());
-            if(entropy_->is_set())
-                entropy(origin, entropy_->value());
-
-            //S.h
-            vector<int> vec = {-1,-1,-1,1,-2,1,1,1,1};
-            if(extraction_of_deteials_->is_set())
-                extraction_of_details(origin, extraction_of_deteials_->value(), vec);
-            if(optimized_extraction_of_deteials_->is_set())
-                optimized_extraction_of_details(origin);
-
-            //O.h
-            if(uolis_operator_->is_set())
-                uolis_operator(origin);
-            if(sobel_operator_->is_set())
-                sobel_operator(origin);
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //Task3
-            //M.h
-            vector<int> mask = {0,1,0,1,1,1,0,1,0};
-            vector<int> maskk1 = {1,2,2,1,0,2,1,2,2};
-            vector<int> maskk2 = {1,1,1,2,0,2,2,2,2};
-            vector<int> maskk3 = {2,2,1,2,0,1,2,2,1};
-            vector<int> maskk4 = {2,2,2,2,0,2,1,1,1};
-            if(dilation_->is_set())
-                dilation(origin,mask);
-            if(erosion_->is_set())
-                erosion(origin,mask);
-            if(opening_->is_set())
-                opening(origin,mask);
-            if(closing_->is_set())
-                closing(origin,mask);
-            if(HMT_->is_set())
-                HMT(origin,maskk1);
+            {
+                //M.h
+                vector<int> mask = {0,1,0,1,1,1,0,1,0};
+                vector<int> maskk1 = {1,2,2,1,0,2,1,2,2};
+                vector<int> maskk2 = {1,1,1,2,0,2,2,2,2};
+                vector<int> maskk3 = {2,2,1,2,0,1,2,2,1};
+                vector<int> maskk4 = {2,2,2,2,0,2,1,1,1};
+                if(dilation_->is_set())
+                    dilation(origin,mask);
+                if(erosion_->is_set())
+                    erosion(origin,mask);
+                if(opening_->is_set())
+                    opening(origin,mask);
+                if(closing_->is_set())
+                    closing(origin,mask);
+                if(HMT_->is_set())
+                    HMT(origin,maskk1);
 
-            int x = 250;
-            int y = 250;
-            mask = {1,1,1,1,1,1,1,1,1};
-            if(M2_->is_set())
-                M2(origin,mask,x,y);
-            if(M1_1_->is_set())
-                M1_1(origin,mask);
-            if(M1_2_->is_set())
-                M1_2(origin,mask);
-            if(M1_3_->is_set())
-                M1_3(origin,mask);
+                int x = 250;
+                int y = 250;
+                mask = {1,1,1,1,1,1,1,1,1};
+                if(M2_->is_set())
+                    M2(origin,mask,x,y);
+                if(M1_1_->is_set())
+                    M1_1(origin,mask);
+                if(M1_2_->is_set())
+                    M1_2(origin,mask);
+                if(M1_3_->is_set())
+                    M1_3(origin,mask);
 
-            //R.h
-            if(region_growing_merging_->is_set())
-                region_growing_merging(origin,mask);
+                //R.h
+                if(region_growing_merging_->is_set())
+                    RegionMergin(origin);
+            }
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //Task4
-            //T.h
-            if(DFT_->is_set())
-                DFT(origin);
-            if(IDFT_->is_set())
-                IDFT(DFT(origin));
-            if(FFT_->is_set())
-                FFT(origin);
-            if(IFFT_->is_set())
-                IFFT(origin);
+            {
+                //T.h
+                if(DFT_->is_set())
+                    DFT(origin);
+                if(IDFT_->is_set())
+                    IDFT(DFT(origin));
+                if(FFT_->is_set())
+                    FFT(origin);
+                if(IFFT_->is_set())
+                    IFFT(origin);
+
+                //F.h
+
+                CImg<unsigned char> mask1("../images/mask1.bmp");
+                CImg<unsigned char> mask2("../images/mask2.bmp");
+
+                if(LPF_->is_set())
+                    LPF(origin,mask1);
+                /*
+           if(HPF_->is_set())
+               HPF(DFT(origin));
+           if(BPF_->is_set())
+               BPF(origin);
+           if(BCF_->is_set())
+               BCF(origin);
+           if(HPDED_->is_set())
+               HPDED(origin);
+           if(PMF_->is_set())
+               PMF(origin);
+               */
+            }
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         }catch(const CImgIOException& a)
