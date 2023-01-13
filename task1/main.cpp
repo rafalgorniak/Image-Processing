@@ -298,21 +298,23 @@ int main(int argc, char *argv[]) {
 
                 CImg<unsigned char> mask1("../images/mask1.bmp");
                 CImg<unsigned char> mask2("../images/mask2.bmp");
+                CImg<unsigned char> mask3("../images/mask3.bmp");
+                CImg<unsigned char> mask4("../images/mask4.bmp");
+                CImg<unsigned char> mask5("../images/mask4.bmp");
 
                 if(LPF_->is_set())
                     LPF(origin,mask1);
-                /*
-           if(HPF_->is_set())
-               HPF(DFT(origin));
-           if(BPF_->is_set())
-               BPF(origin);
-           if(BCF_->is_set())
-               BCF(origin);
-           if(HPDED_->is_set())
-               HPDED(origin);
-           if(PMF_->is_set())
-               PMF(origin);
-               */
+                if(HPF_->is_set())
+                    HPF(origin,mask2);
+                if(BPF_->is_set())
+                    BPF(origin,mask3);
+                if(BCF_->is_set())
+                    BCF(origin,mask4);
+                if(HPDED_->is_set())
+                    HPDED(origin,mask5);
+                if(PMF_->is_set())
+                    PMF(origin);
+
             }
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
