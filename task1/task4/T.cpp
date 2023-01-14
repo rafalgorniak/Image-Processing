@@ -3,40 +3,32 @@
 
 void visualisation(std::vector<std::vector<std::complex<double>>> param) {
 
-    const int ROWS = 512;
+    const int ROWS = (int)param[0].size();
     CImg<unsigned char> newImage1(ROWS, ROWS);
-    std::vector<std::vector<double>> params(512,std::vector<double>(512));
+    std::vector<std::vector<double>> params(ROWS,std::vector<double>(ROWS));
     double max = 0;
     for (int k = 0; k < ROWS; k++) {
         for (int l = 0; l < ROWS; l++) {
 
-
             params[k][l] = log(sqrt(pow(param[k][l].real(),2)+pow(param[k][l].imag(),2)));
             if(params[k][l] > max)
                 max = params[k][l];
-
         }
     }
+
     for (int k = 0; k < ROWS; k++) {
         for (int l = 0; l < ROWS; l++) {
-
-
             newImage1(k,l,0) = (params[k][l]/max)*255;
-            /*
-            if(k<100 and l<100)
-                std::cout << (params[k][l]/max)*255 << std::endl;
-            */
-
         }
     }
-    newImage1.save_bmp("..\\images\\Visualization1.bmp");
+    newImage1.save_bmp("..\\images\\Visualization.bmp");
 }
 
 CImg<unsigned char> CVToImage(std::vector<std::vector<std::complex<double>>> param) {
 
-    const int ROWS = 512;
+    const int ROWS = (int)param[0].size();
     CImg<unsigned char> newImage1(ROWS, ROWS);
-    std::vector<std::vector<double>> params(512,std::vector<double>(512));
+    std::vector<std::vector<double>> params(ROWS,std::vector<double>(ROWS));
     double max = 0;
     for (int k = 0; k < ROWS; k++) {
         for (int l = 0; l < ROWS; l++) {
@@ -44,22 +36,16 @@ CImg<unsigned char> CVToImage(std::vector<std::vector<std::complex<double>>> par
             params[k][l] = sqrt(pow(param[k][l].real(),2)+pow(param[k][l].imag(),2));
             if(params[k][l] > max)
                 max = params[k][l];
-
         }
     }
+
     for (int k = 0; k < ROWS; k++) {
         for (int l = 0; l < ROWS; l++) {
 
-
             newImage1(k,l,0) = (params[k][l]/max)*255;
-            /*
-            if(k<100 and l<100)
-                std::cout << (params[k][l]/max)*255 << std::endl;
-            */
-
         }
     }
-    newImage1.save_bmp("..\\images\\CVToImage1.bmp");
+    newImage1.save_bmp("..\\images\\CVToImage.bmp");
     return newImage1;
 }
 
@@ -84,12 +70,8 @@ std::vector<std::vector<std::complex<double>>> DFT(CImg<unsigned char> &image) {
 
     const int ROWS = 512;
     const int COLS = 512;
-
-// The input image (a grayscale image stored as a 2D array of integers)
     std::vector<std::vector<std::complex<double>>> img = ImageToCV(image);
-// The output image (a 2D array of complex numbers representing the DFT)
 
-    // Compute the DFT of the image
     for (int k = 0; k < ROWS; k++) {
         for (int l = 0; l < COLS; l++) {
             std::complex<double> sum(0.0, 0.0);
@@ -113,12 +95,8 @@ std::vector<std::vector<std::complex<double>>> IDFT(std::vector<std::vector<std:
 
     const int ROWS = 512;
     const int COLS = 512;
-
-// The input image (a grayscale image stored as a 2D array of integers)
     std::vector<std::vector<std::complex<double>>> img(ROWS,std::vector<std::complex<double>>(COLS));
-// The output image (a 2D array of complex numbers representing the DFT)
 
-    // Compute the DFT of the image
     for (int k = 0; k < ROWS; k++) {
         for (int l = 0; l < COLS; l++) {
             std::complex<double> sum(0.0, 0.0);
@@ -135,13 +113,13 @@ std::vector<std::vector<std::complex<double>>> IDFT(std::vector<std::vector<std:
             img[k][l] = sum/ helper;
         }
     }
-
     return img;
 }
 
 
 
 void fft(std::vector<std::complex<double>> &arr, int n) {
+
     if (n == 1) return;
 
     std::vector<std::complex<double>> even(n/2);
@@ -153,7 +131,6 @@ void fft(std::vector<std::complex<double>> &arr, int n) {
     fft(even, n/2);
     fft(odd, n/2);
 
-    // Combine the results using the Cooley-Tukey algorithm
     double theta = -2.0 * M_PI /(double)n;
     std::complex<double> v(1);
     std::complex<double> wn(cos(theta), sin(theta));
@@ -166,26 +143,15 @@ void fft(std::vector<std::complex<double>> &arr, int n) {
 
 std::vector<std::vector<std::complex<double>>> FFT(CImg<unsigned char> &image) {
 
-    const int ROWS = 512;
-    const int COLS = 512;
-
+    const int ROWS = (int)image.width();
     std::vector<std::vector<std::complex<double>>> img = ImageToCV(image);
-    /*
-    for (int j = 0; j < 10; j++) {
-        for (int i = 0; i < 10; i++) {
-            std::cout<<img[j][i].real()<<"  "<<img[j][i].real()<<std::endl;
-        }
-        }
-    */
-// The input image (a grayscale image stored as a 2D array of integers)
 
     for (int i = 0; i < ROWS; i++) {
-        fft(img[i], COLS);
+        fft(img[i], ROWS);
     }
 
-    // Perform the 1D FFT on the columns
     std::vector<std::complex<double>> temp(ROWS);
-    for (int j = 0; j < COLS; j++) {
+    for (int j = 0; j < ROWS; j++) {
         for (int i = 0; i < ROWS; i++) {
             temp[i] = img[i][j];
         }
@@ -193,18 +159,7 @@ std::vector<std::vector<std::complex<double>>> FFT(CImg<unsigned char> &image) {
             for (int i = 0; i < ROWS; i++) {
                 img[i][j] = temp[i];
             }
-
     }
-
-    /*
-    for (int j = 0; j < 10; j++) {
-        for (int i = 0; i < 10; i++) {
-            std::cout<<img[j][i].real()<<"  "<<img[j][i].imag()<<std::endl;
-        }
-    }
-    */
-
-    //visualisation(img);
     return img;
 }
 
@@ -222,7 +177,6 @@ void ifft(std::vector<std::complex<double>> &arr, int n) {
     fft(even, n/2);
     fft(odd, n/2);
 
-    // Combine the results using the Cooley-Tukey algorithm
     double theta = 2.0 * M_PI /(double)n;
     std::complex<double> v(1);
     std::complex<double> wn(cos(theta), -sin(theta));
@@ -235,28 +189,15 @@ void ifft(std::vector<std::complex<double>> &arr, int n) {
 
 std::vector<std::vector<std::complex<double>>> IFFT(CImg<unsigned char> &image) {
 
-    const int ROWS = 512;
-    const int COLS = 512;
-
-    //CImg<unsigned char> origin("../images/lena.bmp");
+    const int ROWS = (int)image.width();
     std::vector<std::vector<std::complex<double>>> img = ImageToCV(image);
-    //td::vector<std::vector<std::complex<double>>> img = FFT(image);
-    /*
-    for (int j = 0; j < 10; j++) {
-        for (int i = 0; i < 10; i++) {
-            std::cout<<img[j][i].real()<<"  "<<img[j][i].real()<<std::endl;
-        }
-        }
-    */
-// The input image (a grayscale image stored as a 2D array of integers)
 
     for (int i = 0; i < ROWS; i++) {
-        ifft(img[i], COLS);
+        ifft(img[i], ROWS);
     }
 
-    // Perform the 1D FFT on the columns
     std::vector<std::complex<double>> temp(ROWS);
-    for (int j = 0; j < COLS; j++) {
+    for (int j = 0; j < ROWS; j++) {
         for (int i = 0; i < ROWS; i++) {
             temp[i] = img[i][j];
         }
@@ -265,41 +206,21 @@ std::vector<std::vector<std::complex<double>>> IFFT(CImg<unsigned char> &image) 
             img[i][j] = temp[i];
         }
     }
-
-    /*
-    for (int j = 0; j < 10; j++) {
-        for (int i = 0; i < 10; i++) {
-            std::cout<<img[j][i].real()<<"  "<<img[j][i].imag()<<std::endl;
-        }
-    }
-    */
 
     CVToImage(img);
     return img;
 }
 std::vector<std::vector<std::complex<double>>> IFFT(std::vector<std::vector<std::complex<double>>> img ) {
 
-    const int ROWS = 512;
-    const int COLS = 512;
-
-    //CImg<unsigned char> origin("../images/lena.bmp");
-    //td::vector<std::vector<std::complex<double>>> img = FFT(image);
-    /*
-    for (int j = 0; j < 10; j++) {
-        for (int i = 0; i < 10; i++) {
-            std::cout<<img[j][i].real()<<"  "<<img[j][i].real()<<std::endl;
-        }
-        }
-    */
-// The input image (a grayscale image stored as a 2D array of integers)
+    const int ROWS = (int)img[0].size();
 
     for (int i = 0; i < ROWS; i++) {
-        ifft(img[i], COLS);
+        ifft(img[i], ROWS);
     }
 
     // Perform the 1D FFT on the columns
     std::vector<std::complex<double>> temp(ROWS);
-    for (int j = 0; j < COLS; j++) {
+    for (int j = 0; j < ROWS; j++) {
         for (int i = 0; i < ROWS; i++) {
             temp[i] = img[i][j];
         }
@@ -309,15 +230,7 @@ std::vector<std::vector<std::complex<double>>> IFFT(std::vector<std::vector<std:
         }
     }
 
-    /*
-    for (int j = 0; j < 10; j++) {
-        for (int i = 0; i < 10; i++) {
-            std::cout<<img[j][i].real()<<"  "<<img[j][i].imag()<<std::endl;
-        }
-    }
-    */
-
     CVToImage(img);
-    visualisation(img);
+    //visualisation(img);
     return img;
 }

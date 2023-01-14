@@ -296,24 +296,27 @@ int main(int argc, char *argv[]) {
 
                 //F.h
 
-                CImg<unsigned char> mask1("../images/mask1.bmp");
-                CImg<unsigned char> mask2("../images/mask2.bmp");
-                CImg<unsigned char> mask3("../images/mask3.bmp");
-                CImg<unsigned char> mask4("../images/mask4.bmp");
-                CImg<unsigned char> mask5("../images/mask4.bmp");
+
+
+                CImg<unsigned char> mask1("../images/F5_M1.bmp");
+                CImg<unsigned char> mask2("../images/F5_M2.bmp");
+                CImg<unsigned char> image1("../images/F5_I1.bmp");
+                CImg<unsigned char> image2("../images/F5_I2.bmp");
+                CImg<unsigned char> image3("../images/F5_I3.bmp");
+
 
                 if(LPF_->is_set())
-                    LPF(origin,mask1);
+                    LPF(origin,10);
                 if(HPF_->is_set())
-                    HPF(origin,mask2);
+                    HPF(origin,10);
                 if(BPF_->is_set())
-                    BPF(origin,mask3);
+                    BPF(origin,200,180);
                 if(BCF_->is_set())
-                    BCF(origin,mask4);
+                    BCF(origin,15,5);
                 if(HPDED_->is_set())
-                    HPDED(origin,mask5);
+                    HPDED(image3,mask2);
                 if(PMF_->is_set())
-                    PMF(origin);
+                    PMF(origin,500,500);
 
             }
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
