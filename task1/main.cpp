@@ -101,6 +101,8 @@ int main(int argc, char *argv[]) {
     auto IDFT_ = op.add<Switch>("", "IDFT", "Inverse Discrete Furier Transform");
     auto IFFT_ = op.add<Switch>("", "IFFT", "Inverse Fast Furier Transform");
 
+    auto FFTF_ = op.add<Switch>("", "FFTF", "Fast Furier Transform");
+
     //F.h
     auto LPF_ = op.add<Switch>("", "LPF", "Low-Pass FIlter");
     auto HPF_ = op.add<Switch>("", "HPF", "High-Pass FIlter");
@@ -294,6 +296,10 @@ int main(int argc, char *argv[]) {
                 if(IFFT_->is_set())
                     IFFT(origin);
 
+                //Mr ask for FFT in frequency domain so here it is
+                if(FFTF_->is_set())
+                    FFTF(origin);
+
                 //F.h
 
 
@@ -306,9 +312,9 @@ int main(int argc, char *argv[]) {
 
 
                 if(LPF_->is_set())
-                    LPF(origin,10);
+                    LPF(origin,20);
                 if(HPF_->is_set())
-                    HPF(origin,10);
+                    HPF(origin,30);
                 if(BPF_->is_set())
                     BPF(origin,200,180);
                 if(BCF_->is_set())
@@ -316,7 +322,7 @@ int main(int argc, char *argv[]) {
                 if(HPDED_->is_set())
                     HPDED(image3,mask2);
                 if(PMF_->is_set())
-                    PMF(origin,500,500);
+                    PMF(origin,50,50);
 
             }
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////

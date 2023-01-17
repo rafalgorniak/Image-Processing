@@ -160,9 +160,57 @@ std::vector<std::vector<std::complex<double>>> FFT(CImg<unsigned char> &image) {
                 img[i][j] = temp[i];
             }
     }
+    visualisation(img);
     return img;
 }
 
+
+void fftf(std::vector<std::complex<double>> &arr, int n) {
+
+    if (n == 1) return;
+
+    std::vector<std::complex<double>> even(n/2);
+    std::vector<std::complex<double>> odd(n/2);
+    double theta = -2.0 * M_PI /(double)n;
+    std::complex<double> v(1);
+    std::complex<double> wn(cos(theta), sin(theta));
+    for (int i = 0; i < n/2; i++) {
+
+        even[i] = arr[i] + arr[i + n/2];
+        odd[i] = (arr[i] - arr[i + n/2])*v;
+        v *= wn;
+    }
+    fftf(even, n/2);
+    fftf(odd, n/2);
+
+    for (int k = 0; k < n/2; k++) {
+        arr[2*k] = even[k];
+        arr[2*k +1] = odd[k];
+    }
+}
+
+std::vector<std::vector<std::complex<double>>> FFTF(CImg<unsigned char> &image) {
+
+    const int ROWS = (int)image.width();
+    std::vector<std::vector<std::complex<double>>> img = ImageToCV(image);
+
+    for (int i = 0; i < ROWS; i++) {
+        fftf(img[i], ROWS);
+    }
+
+    std::vector<std::complex<double>> temp(ROWS);
+    for (int j = 0; j < ROWS; j++) {
+        for (int i = 0; i < ROWS; i++) {
+            temp[i] = img[i][j];
+        }
+        fftf(temp, ROWS);
+        for (int i = 0; i < ROWS; i++) {
+            img[i][j] = temp[i];
+        }
+    }
+    visualisation(img);
+    return img;
+}
 
 
 void ifft(std::vector<std::complex<double>> &arr, int n) {

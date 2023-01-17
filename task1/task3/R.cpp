@@ -105,7 +105,7 @@ void RegionMergin(CImg<unsigned char> &image) {
                 for(int yy = -1; yy<=1; yy++) {
                     if(itr->x+xx >= 0 and itr->y+yy >= 0) {
 
-                        if( newImage1(itr->x+xx,itr->y+yy,0)==0  && (xx!=0 || yy!=0) && abs( image(itr->x,itr->y,0) - image(itr->x+xx,itr->y+yy,0) ) ==0 ) {
+                        if( newImage1(itr->x+xx,itr->y+yy,0)==0  && (xx!=0 || yy!=0) && abs( image(itr->x,itr->y,0) - image(itr->x+xx,itr->y+yy,0) ) <=4 ) {
                             //std::cout<<"adad"<<std::endl;
                             newImage1(itr->x+xx,itr->y+yy,0) = 255;
                             CheckPixels.emplace_back(itr->x+xx, itr->y+yy);

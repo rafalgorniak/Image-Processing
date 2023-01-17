@@ -129,8 +129,8 @@ void PMF(CImg<unsigned char> &image, int param1, int param2) {
     std::vector<std::vector<std::complex<double>>> mask(ROWS,std::vector<std::complex<double>>(ROWS));
     for(int w = 0; w <ROWS ; w++) {
         for(int h = 0; h <ROWS ; h++) {
-            double theta = M_PI * (int)(-2*w*param1/ROWS -2*h*param2/ROWS + param1 +param2);
-            std::complex<double> point(cos(theta), -sin(theta));
+            double theta = M_PI * (double(-2*w*param1)/ROWS -double(2*h*param2)/ROWS + param1 +param2);
+            std::complex<double> point(cos(theta), sin(theta));
             img1[w][h] *= point;
         }
     }

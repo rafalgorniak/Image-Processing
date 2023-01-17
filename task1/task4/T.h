@@ -21,6 +21,10 @@ void fft(std::vector<std::complex<double>> &arr, int n);
 
 std::vector<std::vector<std::complex<double>>> FFT(CImg<unsigned char> &image);
 
+std::vector<std::vector<std::complex<double>>> FFTF(CImg<unsigned char> &image);
+
+void fftf(std::vector<std::complex<double>> &arr, int n);
+
 void ifft(std::vector<std::complex<double>> &arr, int n);
 
 std::vector<std::vector<std::complex<double>>> IFFT(CImg<unsigned char> &image);
